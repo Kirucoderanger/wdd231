@@ -1,0 +1,118 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 800px;
+  
+  
+}
+header, nav, main, footer {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  
+}
+header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right, rgb(32, 91, 32), blue);
+  font-size: xx-large;
+  font-weight: 600;
+  gap: 2rem;
+}
+span{
+  color: rgb(224, 226, 121);
+}
+header img{
+  border-radius: 5%;
+  object-fit: cover;
+  box-shadow:  4px 8px rgba(0, 0, 0, 0.2);
+}
+section img{
+  border-radius: 5%;
+  flex-shrink: 1;
+  width: 100%;
+  
+  object-fit: cover;
+  box-shadow:  4px 8px rgba(0, 0, 0, 0.2);
+}
+
+nav {
+  background: #110404; /* Light gray background */
+  color: azure;
+}
+.navigation {
+  display: none;
+  flex-direction: column;
+  color: azure;
+}
+.navigation.show {
+  display: flex;
+}
+#menu {
+  float: right;
+}
+nav li {
+  list-style: none;
+ 
+}
+nav a{
+  text-decoration: none;
+  color: #fcf7f7;
+}
+h2{
+  background: linear-gradient(to right, rgb(32, 91, 32), blue);
+  border-radius: 15% 0% 5% 0%;
+  padding: 0.5rem;
+}
+main{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  background-color: silver;
+  gap: 2rem;
+}
+section{
+  
+  background-color: aliceblue;
+  flex-shrink: 1;
+  
+  
+  
+}
+.coursework ol{
+  display: flex;
+  flex-direction: column;
+ 
+  
+}
+ol li{
+  
+  list-style: none;
+  
+}
+#courseCards{
+  display: flex;
+  flex-direction: column;
+  
+}
+#courseCards div{
+  
+  border-radius: 5%;
+  margin: 1.5rem;
+  
+  text-align: center;
+ 
+
+}
+
+#controls{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+footer{
+  background-color: silver;
+}

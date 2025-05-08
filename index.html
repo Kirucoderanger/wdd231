@@ -1,23 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Webpage</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Responsive and accessible home page project." />
+  <meta name="author" content="Kirubel Mekonen" />
+  <title>Home</title>
+  <link rel="stylesheet" href="styles/normalize.css" />
+  <link rel="stylesheet" href="styles/small.css" />
+  <link rel="stylesheet" href="styles/large.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="scripts/navigation.js" defer></script>
+  <script src="scripts/date.js" defer></script>
+  <script src="scripts/course.js" defer></script>
 </head>
-  <body>
-   <header>
-    <nav>
-   <ul>
-   </ul>
-     </nav>
-   </header>
-<main>
-   <h1>Welcome to my webpage!</h1>
-    <p>This is a template for a basic webpage.</p>
-</main>
-<footer>
-   <p>Copyright ©2021 My Webpage</p>
-</footer>
+<body>
+  <header>
+    <img src="images/profile.jpg " width="75px" height="100px" alt="Profile" loading="lazy" />
+    <span><p>Kirubel m. Lemu</p></span>
+  </header>
+  <nav>
+    <button id="menu">&#9776;</button>
+    <ul class="navigation">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="#">Chamber</a></li>
+      <li><a href="#">Final</a></li>
+      <li><a href="#">GitHub Profile</a></li>
+      <li><a href="https://www.linkedin.com/in/example">LinkedIn</a></li>
+    </ul>
+  </nav>
+  <main>
+    <h1>Home</h1>
+    <section class="coursework">
+      <h2>Course Work </h2>
+      <ol class="navigation">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="#">Chamber</a></li>
+        <li><a href="#">Final</a></li>
+        <li><a href="#">GitHub Profile</a></li>
+        <li><a href="https://www.linkedin.com/in/example">LinkedIn</a></li>
+      </ol>
+    </section>
+    <section>
+        <h2>About</h2>
+        <img src="images/profile.jpg " width="400px" height="500px" alt="Profile" loading="lazy" />
+        <p>Based in Austria, delivering modern, accessible, and responsive websites.</p>
+      </section>
+    <section class="certificate">
+      <h2>Web and Computer programming Certificate </h2>
+      <div id="controls">
+        <button id="all">All Courses</button>
+        <button id="wdd">WDD Courses</button>
+        <button id="cse">CSE Courses</button>
+      </div>
+      <div id="courseCards"></div>
+      <p>Total Credits: <span id="totalCredits">0</span></p>
+    </section>
+    
+  </main>
+  <footer>
+    <p>&copy; <span id="year"></span> Lara Keane, Austria</p>
+    <p id="lastModified"></p>
+  </footer>
 </body>
 </html>
