@@ -16,8 +16,8 @@ function renderCourses(filter) {
     const card = document.createElement("div");
     card.className = c.completed ? "card completed" : "card";
     card.innerHTML = `<p>${c.subject} ${c.number} ${c.description}<strong>Credits:</strong> ${c.credits}</p>`;
-    let value1 = c.subject;
-    if(value1 == 'CSE')
+    let value1 = c.completed;
+    if(value1 == true)
     {
     card.style.backgroundColor = 'lightblue';
     }
