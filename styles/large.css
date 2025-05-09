@@ -1,13 +1,14 @@
 @media (min-width: 600px) {
   .navigation {
     display: flex !important;
+    flex-direction: row;
     
   }
 
   .navigation {
 		display: flex;
 	}
-  
+
 	.navigation li {
 		display: block; /* change state in small view */
 		flex: 1 1 100%;

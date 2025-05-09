@@ -25,11 +25,13 @@ span{
   color: rgb(224, 226, 121);
 }
 header img{
-  border-radius: 10%;
+  border-radius: 5%;
   object-fit: cover;
-  box-shadow:  2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 30px gray;
+  border: 1px solid black;
+  padding: 2px;
   
-  padding: 0.5rem;
+  
 }
 section img{
   border-radius: 1%;
@@ -52,6 +54,8 @@ nav {
   list-style: none;
 	margin: 0 auto;
 	max-width: 760px;
+  display: flex;
+	flex-direction: column;
 }
 .navigation.show {
   display: flex;
