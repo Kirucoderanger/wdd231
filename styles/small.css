@@ -179,4 +179,7 @@ button{
 }
 footer{
   background-color: silver;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
