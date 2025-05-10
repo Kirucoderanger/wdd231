@@ -22,7 +22,7 @@ function renderCourses(filter) {
     card.style.backgroundColor = 'lightblue';
     }
     else{
-      card.style.backgroundColor = 'brown';
+      card.style.backgroundColor = 'lightgray';
 
     }
     container.appendChild(card);
