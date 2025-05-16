@@ -7,18 +7,31 @@ body {
   padding: 0;
   line-height: 1.6;
 }
-
-h1 {
-  font-size: 1rem;
+header p {
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
   
   color: darksalmon;
+}
+
+h1 {
+  font-size: 2rem;
+  
+  color: black;
+  text-align: center;
+  margin: 0;
+  padding: 1rem 0;
   
 }
 
 a {
   
   text-decoration: none;
+
 }
+
+
 
 a:hover {
   text-decoration: underline;
@@ -118,9 +131,11 @@ nav.open {
 .view-toggle {
   text-align: center;
   margin: 2rem 0 1rem;
+    
 }
 
 .view-toggle button {
+    
   margin: 0 0.5rem;
   padding: 0.5rem 1rem;
   border: none;

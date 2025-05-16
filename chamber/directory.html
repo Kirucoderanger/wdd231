@@ -1,28 +1,28 @@
-<!-- directory.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Explore verified local businesses in Addis Ababa through the official Chamber of Commerce directory." />
-  <meta name="author" content="Kirubel" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore verified local businesses in Addis Ababa through the official Chamber of Commerce directory.">
+  <meta name="author" content="Kirubel Mekonen Lemu">
   <title>Business Directory | Addis Ababa Chamber of Commerce</title>
+  <link rel="icon" href="favicon.ico">
 
   <!-- Facebook Meta Tags -->
-  <meta property="og:title" content="Addis Ababa Chamber of Commerce Directory" />
+  <meta property="og:title" content="Addis Ababa Chamber of Commerce Directory">
   <meta property="og:description" content="Discover businesses and services in Addis Ababa, powered by the Chamber of Commerce." />
-  <meta property="og:image" content="images/chamber-social.jpg" />
-  <meta property="og:url" content="https://addischamber.org/directory.html" />
+  <meta property="og:image" content="images/logo.jpg">
+  <meta property="og:url" content="https://kirucoderanger.github.io/wdd231/chamber/directory.html">
 
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="styles/normalize.css" />
-  <link rel="stylesheet" href="styles/style.css" />
-  <link rel="stylesheet" href="styles/large.css" />
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles/normalize.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/large.css">
 </head>
 <body>
   <header>
-    <img src="images/logo5.png" alt="Addis Ababa Chamber of Commerce Logo" width="34" height="40" loading="lazy" />
-    <span class="logo-text"><h1>Addis Chamber of Commerce</h1></span>
+    <img src="images/logo.png" alt="Addis Ababa Chamber of Commerce Logo" width="34" height="40" loading="lazy">
+    <p>Addis Ababa Chamber of Commerce</p>
     <button id="menu"  aria-label="menu" ></button>
     </header>
     <nav id="animated-menu">
@@ -39,11 +39,12 @@
   
 
   <main>
-    <section class="view-toggle">
+    <h1>Addis Chamber Business Directory</h1>
+    <div class="view-toggle">
       <button id="grid-view">Grid View</button>
       <button id="list-view">List View</button>
-    </section>
-    <section id="members-container" class="grid-view"></section>
+    </div>
+    <div id="members-container" class="grid-view"></div>
   </main>
 
   <footer>
@@ -55,49 +56,3 @@
   <script src="scripts/script.js" defer></script>
 </body>
 </html>
-<script>
-  // JavaScript to handle the directory view toggle
-  document.addEventListener('DOMContentLoaded', () => {
-    const membersContainer = document.getElementById('members-container');
-    const gridViewButton = document.getElementById('grid-view');
-    const listViewButton = document.getElementById('list-view');
-
-    // Sample data for demonstration
-    const members = [
-      { name: 'Business One', description: 'Description of Business One', image: 'images/business1.jpg' },
-      { name: 'Business Two', description: 'Description of Business Two', image: 'images/business2.jpg' },
-      { name: 'Business Three', description: 'Description of Business Three', image: 'images/business3.jpg' },
-      // Add more members as needed
-    ];
-
-    function renderMembers(view) {
-      membersContainer.innerHTML = '';
-      members.forEach(member => {
-        const memberCard = document.createElement('div');
-        memberCard.className = view === 'grid' ? 'member-card grid-item' : 'member-card list-item';
-        memberCard.innerHTML = `
-          <img src="${member.image}" alt="${member.name}" />
-          <h3>${member.name}</h3>
-          <p>${member.description}</p>
-        `;
-        membersContainer.appendChild(memberCard);
-      });
-    }
-
-    gridViewButton.addEventListener('click', () => {
-      membersContainer.className = 'grid-view';
-      renderMembers('grid');
-    });
-
-    listViewButton.addEventListener('click', () => {
-      membersContainer.className = 'list-view';
-      renderMembers('list');
-    });
-
-    // Initialize with grid view
-    renderMembers('grid');
-
-    // Set current year and last modified date
-    document.getElementById('year').textContent = new Date().getFullYear();
-    document.getElementById('lastModified').textContent = document.lastModified;
-  });

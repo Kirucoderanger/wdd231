@@ -81,3 +81,54 @@ document.addEventListener("DOMContentLoaded", () => {
   loadMembers();
 });
 // Responsive design for mobile
+
+/*
+
+<script>
+  // JavaScript to handle the directory view toggle
+  document.addEventListener('DOMContentLoaded', () => {
+    const membersContainer = document.getElementById('members-container');
+    const gridViewButton = document.getElementById('grid-view');
+    const listViewButton = document.getElementById('list-view');
+
+    // Sample data for demonstration
+    const members = [
+      { name: 'Business One', description: 'Description of Business One', image: 'images/business1.jpg' },
+      { name: 'Business Two', description: 'Description of Business Two', image: 'images/business2.jpg' },
+      { name: 'Business Three', description: 'Description of Business Three', image: 'images/business3.jpg' },
+      // Add more members as needed
+    ];
+
+    function renderMembers(view) {
+      membersContainer.innerHTML = '';
+      members.forEach(member => {
+        const memberCard = document.createElement('div');
+        memberCard.className = view === 'grid' ? 'member-card grid-item' : 'member-card list-item';
+        memberCard.innerHTML = `
+          <img src="${member.image}" alt="${member.name}" />
+          <h3>${member.name}</h3>
+          <p>${member.description}</p>
+        `;
+        membersContainer.appendChild(memberCard);
+      });
+    }
+
+    gridViewButton.addEventListener('click', () => {
+      membersContainer.className = 'grid-view';
+      renderMembers('grid');
+    });
+
+    listViewButton.addEventListener('click', () => {
+      membersContainer.className = 'list-view';
+      renderMembers('list');
+    });
+
+    // Initialize with grid view
+    renderMembers('grid');
+
+    // Set current year and last modified date
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('lastModified').textContent = document.lastModified;
+  });
+
+*/
