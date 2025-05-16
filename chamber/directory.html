@@ -17,22 +17,27 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="styles/normalize.css" />
   <link rel="stylesheet" href="styles/style.css" />
+  <link rel="stylesheet" href="styles/large.css" />
 </head>
 <body>
   <header>
-    <h1>Addis Ababa Chamber of Commerce</h1>
-    <nav>
-      <ul>
+    <img src="images/logo.png" alt="Addis Ababa Chamber of Commerce Logo" width="100" height="100" loading="lazy" />
+    <span class="logo-text"><h1>Addis Ababa Chamber of Commerce</h1></span>
+    <button id="menu"  aria-label="menu" ></button>
+    </header>
+    <nav id="animated-menu">
+        
+      <ul class="navigation">
         <li><a href="index.html">Home</a></li>
         <li><a href="events.html">Events</a></li>
         <li><a href="join.html">Join</a></li>
-        <li><a href="directory.html" class="active">Directory</a></li>
+        <li class="active"><a href="directory.html">Directory</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="news.html">News</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
-  </header>
+  
 
   <main>
     <section class="view-toggle">

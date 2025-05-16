@@ -19,33 +19,94 @@ a:hover {
 
 /* Header & Navigation */
 header {
+  display: grid;
+  grid-template-columns: 44px auto 44px;
+  align-items:end; 
   background-color: #003366;
   color: #fff;
   padding: 1.5rem;
   text-align: center;
 }
 
-nav ul {
+nav {
+  background-color: #0056a6;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+#menu {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+  padding: .25rem 2vw;
+}
+
+#menu::before {
+  content: "\2630"; /* FontAwesome icon for hamburger menu */
+  font-family: FontAwesome;
+  font-size: 1.5rem;
+}
+
+/*nav ul {
+  
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   list-style: none;
   padding: 0;
   margin-top: 1rem;
+}*/
+
+ul.navigation li a{
+  
+  display: block;
+  padding: .75rem 2vw;   
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  
 }
 
-nav li {
-  margin: 0 1rem;
-}
-
-nav a {
+/*nav a {
   color: #fff;
   font-weight: bold;
+}*/
+
+li.active a {
+  background-color: rgba(0, 0, 0, 0.2);
+  
 }
 
-nav a.active {
-  text-decoration: underline;
+ul.navigation {
+ 
+  list-style-type: none;
 }
+
+#menu.open::before {
+  content: "\2715"; /* FontAwesome icon for close menu */
+}
+
+nav {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease-out;
+
+}
+
+nav ul {
+    overflow: hidden;
+}
+
+nav.open {
+    grid-template-rows: 1fr;
+}
+/*nav a.active {
+  text-decoration: underline;
+}*/
 
 /* View Toggle */
 .view-toggle {
