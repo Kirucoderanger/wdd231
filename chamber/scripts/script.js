@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       membersContainer.innerHTML = members.map(member => `
         <div class="member-card level-${member.membership}">
-          <img src="images/${member.image}" alt="${member.name} logo" />
+          <img src="images/${member.image}" alt="${member.name} logo" loading="lazy" width="34" height="40" />
           <h3>${member.name}</h3>
           <p>${member.description}</p>
           <p><strong>Address:</strong> ${member.address}</p>

@@ -14,5 +14,13 @@
         color: tomato;
     }
 
-    
+    nav {
+        grid-template-rows: 1fr;
+    }
+
+    h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin: 0;
+    }
 }

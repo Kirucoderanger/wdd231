@@ -4,7 +4,7 @@
     "address": "Bole Road, Addis Ababa",
     "phone": "+251-11-111-2222",
     "website": "https://ethiotech.et",
-    "image": "ethio-tech.png",
+    "image": "logo.png",
     "membership": 3,
     "description": "Providing cutting-edge software and IT services across East Africa."
   },
@@ -13,7 +13,7 @@
     "address": "Mexico Square, Addis Ababa",
     "phone": "+251-11-222-3333",
     "website": "https://selamcoffee.et",
-    "image": "selam-coffee.png",
+    "image": "logo.png",
     "membership": 2,
     "description": "Premium organic Ethiopian coffee exporters."
   },
@@ -22,7 +22,7 @@
     "address": "Piazza, Addis Ababa",
     "phone": "+251-11-333-4444",
     "website": "https://habeshacraft.et",
-    "image": "habesha-craft.png",
+    "image": "logo.png",
     "membership": 1,
     "description": "Handmade Ethiopian artisan products."
   },
@@ -31,7 +31,7 @@
     "address": "Lideta, Addis Ababa",
     "phone": "+251-11-444-5555",
     "website": "https://addisclinic.et",
-    "image": "addis-health.png",
+    "image": "logo.png",
     "membership": 2,
     "description": "Modern health services with community outreach programs."
   },
@@ -40,7 +40,7 @@
     "address": "Gurd Shola, Addis Ababa",
     "phone": "+251-11-555-6666",
     "website": "https://abysslogistics.et",
-    "image": "abyssinia-logistics.png",
+    "image": "logo.png",
     "membership": 3,
     "description": "Reliable logistics and supply chain services across Africa."
   },
@@ -49,7 +49,7 @@
     "address": "Bambis, Addis Ababa",
     "phone": "+251-11-666-7777",
     "website": "https://bluenilefashion.et",
-    "image": "blue-nile.png",
+    "image": "logo.png",
     "membership": 1,
     "description": "Contemporary Ethiopian fashion for local and global markets."
   },
@@ -58,7 +58,7 @@
     "address": "Kazanchis, Addis Ababa",
     "phone": "+251-11-777-8888",
     "website": "https://enatinsurance.et",
-    "image": "enat-insurance.png",
+    "image": "logo.png",
     "membership": 2,
     "description": "Insurance services tailored for individuals and small businesses."
   },
@@ -68,7 +68,7 @@
   "address": "Meskel Square, Addis Ababa",
   "phone": "+251-11-888-9999",
   "website": "https://ethiopianchamber.et",
-  "image": "chamber-logo.png",
+  "image": "logo.png",
   "description": "The Ethiopian Chamber of Commerce and Sectoral Associations (ECCSA) is a non-profit organization that represents the interests of the business community in Ethiopia. It provides a platform for networking, advocacy, and support for businesses across various sectors."
 },
 {
@@ -76,7 +76,7 @@
   "address": "Meskel Square, Addis Ababa",
   "phone": "+251-11-888-9999",
   "website": "https://ethiopianchamber.et",
-  "image": "chamber-logo.png",
+  "image": "logo.png",
   "description": "The Ethiopian Chamber of Commerce and Sectoral Associations (ECCSA) is a non-profit organization that represents the interests of the business community in Ethiopia. It provides a platform for networking, advocacy, and support for businesses across various sectors."
 }
 

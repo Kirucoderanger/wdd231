@@ -8,8 +8,15 @@ body {
   line-height: 1.6;
 }
 
+h1 {
+  font-size: 1rem;
+  
+  color: darksalmon;
+  
+}
+
 a {
-  color: #0056a6;
+  
   text-decoration: none;
 }
 
@@ -20,18 +27,23 @@ a:hover {
 /* Header & Navigation */
 header {
   display: grid;
-  grid-template-columns: 44px auto 44px;
-  align-items:end; 
+  grid-template-columns: 1fr auto 1fr;
+  align-items:start; 
   background-color: #003366;
   color: #fff;
   padding: 1.5rem;
-  text-align: center;
-}
+  text-align: left;
+  
+
+  }
 
 nav {
   background-color: #0056a6;
-  padding: 1rem;
-  margin-top: 1rem;
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease-out;
+  
+  
 }
 
 #menu {
@@ -90,12 +102,6 @@ ul.navigation {
   content: "\2715"; /* FontAwesome icon for close menu */
 }
 
-nav {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.5s ease-out;
-
-}
 
 nav ul {
     overflow: hidden;
@@ -143,6 +149,20 @@ nav.open {
 
 .list-view {
   display: block;
+}
+
+.list-view .member-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+.list-view .member-card img {
+  display: none;
+}
+
+.list-view .member-card:nth-child(odd) {
+  background-color: #eeebde;
 }
 
 .member-card {
