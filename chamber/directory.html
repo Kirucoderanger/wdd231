@@ -1,0 +1,99 @@
+<!-- directory.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Explore verified local businesses in Addis Ababa through the official Chamber of Commerce directory." />
+  <meta name="author" content="Kirubel" />
+  <title>Business Directory | Addis Ababa Chamber of Commerce</title>
+
+  <!-- Facebook Meta Tags -->
+  <meta property="og:title" content="Addis Ababa Chamber of Commerce Directory" />
+  <meta property="og:description" content="Discover businesses and services in Addis Ababa, powered by the Chamber of Commerce." />
+  <meta property="og:image" content="images/chamber-social.jpg" />
+  <meta property="og:url" content="https://addischamber.org/directory.html" />
+
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="styles/normalize.css" />
+  <link rel="stylesheet" href="styles/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Addis Ababa Chamber of Commerce</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="join.html">Join</a></li>
+        <li><a href="directory.html" class="active">Directory</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="view-toggle">
+      <button id="grid-view">Grid View</button>
+      <button id="list-view">List View</button>
+    </section>
+    <section id="members-container" class="grid-view"></section>
+  </main>
+
+  <footer>
+    <p>Contact us: info@addischamber.org | +251-11-123-4567</p>
+    <p>&copy; <span id="year"></span> Addis Ababa Chamber of Commerce</p>
+    <p>Developed by Kirubel | Last modified: <span id="lastModified"></span></p>
+  </footer>
+
+  <script src="scripts/script.js" defer></script>
+</body>
+</html>
+<script>
+  // JavaScript to handle the directory view toggle
+  document.addEventListener('DOMContentLoaded', () => {
+    const membersContainer = document.getElementById('members-container');
+    const gridViewButton = document.getElementById('grid-view');
+    const listViewButton = document.getElementById('list-view');
+
+    // Sample data for demonstration
+    const members = [
+      { name: 'Business One', description: 'Description of Business One', image: 'images/business1.jpg' },
+      { name: 'Business Two', description: 'Description of Business Two', image: 'images/business2.jpg' },
+      { name: 'Business Three', description: 'Description of Business Three', image: 'images/business3.jpg' },
+      // Add more members as needed
+    ];
+
+    function renderMembers(view) {
+      membersContainer.innerHTML = '';
+      members.forEach(member => {
+        const memberCard = document.createElement('div');
+        memberCard.className = view === 'grid' ? 'member-card grid-item' : 'member-card list-item';
+        memberCard.innerHTML = `
+          <img src="${member.image}" alt="${member.name}" />
+          <h3>${member.name}</h3>
+          <p>${member.description}</p>
+        `;
+        membersContainer.appendChild(memberCard);
+      });
+    }
+
+    gridViewButton.addEventListener('click', () => {
+      membersContainer.className = 'grid-view';
+      renderMembers('grid');
+    });
+
+    listViewButton.addEventListener('click', () => {
+      membersContainer.className = 'list-view';
+      renderMembers('list');
+    });
+
+    // Initialize with grid view
+    renderMembers('grid');
+
+    // Set current year and last modified date
+    document.getElementById('year').textContent = new Date().getFullYear();
+    document.getElementById('lastModified').textContent = document.lastModified;
+  });

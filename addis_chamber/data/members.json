@@ -1,0 +1,19 @@
+
+[
+  {
+    "name": "Abyssinia Technologies",
+    "address": "199 Business Ave, Addis Ababa",
+    "phone": "+251-111-111111",
+    "website": "https://abyssiniatech.com",
+    "image": "images/abyssinia.png",
+    "membership": 3
+  },
+  {
+    "name": "Blue Nile Logistics",
+    "address": "145 Nile Rd, Addis Ababa",
+    "phone": "+251-222-222222",
+    "website": "https://bluenilelogistics.com",
+    "image": "images/bluenile.png",
+    "membership": 2
+  }
+]
