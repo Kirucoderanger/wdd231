@@ -10,6 +10,16 @@ function setSectionSelection() {
   });
 }
 
+export function populateSections(Sections){
+    const sectionSelect = document.querySelector("#sectionNumber");
+    byuiCourse.sections.forEach((section) => {
+        const option = document.createElement("option");
+        option.value = section.sectionNumber;
+        option.textContent = `${section.sectionNumber}`;
+        sectionSelect.appendChild(option);
+    });
+}
+
 /*export function setSectionSelection() {
   const sectionSelect = document.querySelector("#sectionNumber");
   byuiCourse.sections.forEach((section) => {
@@ -19,7 +29,7 @@ function setSectionSelection() {
     sectionSelect.appendChild(option);
   });
 }*/
-
+/*
 export function populateSections(sections) {
   const sectionSelect = document.querySelector("#sectionNumber");
   const html = byuiCourse.sections.map(
@@ -29,4 +39,4 @@ export function populateSections(sections) {
     <td>${section.instructor}</td></tr>`
   );
   document.querySelector("#sections").innerHTML = html.join("");
-}
+}*/
