@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenWeatherMap.org API Test</title>
+  <link rel="stylesheet" href="styles/weatherkit.css">
+  <script src="scripts/weatherkit.js"  defer></script>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/normalize.css">
+    </head>
+
+<body>
+    <header>
+        <h1>OpenWeatherMap.org API Test</h1>
+
+    </header>
+
+
+<main>
+    <p>Your Current Location: <span id="location"></span></p>
+    <p>The current temperature: <span id="current-temp"></span></p>
+    <p>Weather: <span id="weather-description"></span></p>
+    
+
+  <figure>
+    <img id="weather-icon" src="" alt="">
+    <figcaption></figcaption>
+  </figure>
+  <h2>5-Day Weather Forecast</h2>
+  <div id="weatherForecast">
+    <div class="forecast-item">
+      <p>Date: <span id="forecast-date"></span></p>
+      <p>Temperature: <span id="forecast-temp"></span></p>
+      <p>Weather: <span id="forecast-description"></span></p>
+    </div>
+  <div id="weatherForecastList"></div>
+</main>
+<footer>
+  Kirubel Mekonen Lemu | OpenWeatherMap.org | CC BY-SA 4.0
+</footer>
+
+</body>
+</html>
+<!-- 
+ --><!-- Compare this snippet from weatherkit.js: -->
