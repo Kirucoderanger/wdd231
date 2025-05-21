@@ -4,7 +4,7 @@
 // It retrieves the current weather and a 5-day forecast for a specified location.
 // This script also includes a search feature to allow users to find weather data for different cities.
 // It uses the Geolocation API to get the user's current location and fetches weather data accordingly.
-// It also includes a search feature to allow users to find weather data for different cities.
+
 
 
 const currentTemp = document.querySelector("#current-temp");
