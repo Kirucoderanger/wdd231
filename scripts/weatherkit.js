@@ -2,6 +2,10 @@
 // Weather API script
 // This script fetches weather data from the OpenWeatherMap API and displays it on the webpage.
 // It retrieves the current weather and a 5-day forecast for a specified location.
+// This script also includes a search feature to allow users to find weather data for different cities.
+// It uses the Geolocation API to get the user's current location and fetches weather data accordingly.
+// It also includes a search feature to allow users to find weather data for different cities.
+
 
 const currentTemp = document.querySelector("#current-temp");
 const weatherIcon = document.querySelector("#weather-icon");
@@ -29,6 +33,7 @@ const weatherData = {
 async function apiFetch() {
   try {
     const response = await fetch(weatherURL);
+    
     if (response.ok) {
         const data = await response.json();
         console.log(data);
@@ -41,11 +46,11 @@ async function apiFetch() {
     }
 }
 
-function displayWeather(data) {
+function displayWeather(data, dataCelsius) {
     console.log("Displaying weather data...");
     locationn.innerHTML = `<strong>${data.name}</strong>`;
     weatherDescription.innerHTML = `<strong>${data.weather[0].description}</strong>`;
-    currentTemp.innerHTML = `<strong>${Math.round(data.main.temp)}&deg;F</strong>`;
+    currentTemp.innerHTML = `<strong>${Math.round(data.main.temp)}&deg;F/${Math.round(dataCelsius.main.temp)}&deg;C</strong>`;
     const iconURL = `${weatherIconURL}${data.weather[0].icon}${iconSize}`;
     weatherIcon.setAttribute("src", iconURL);
     weatherIcon.setAttribute("alt", weatherIconAlt);
@@ -54,8 +59,7 @@ function displayWeather(data) {
 }
 
 
- const header = document.createElement("h2");
-            header.textContent = "5 Days of Weather Forecasting";
+ 
 async function displayForecast() {
     try {
         const response = await fetch(forecastURL);
@@ -73,7 +77,7 @@ async function displayForecast() {
 
                 const forecastItem = document.createElement("div");
                 
-                //weatherForecastList.appendChild(header);
+                
                 forecastItem.classList.add("forecast-item");
                 forecastItem.innerHTML = `
                     <p>${date.toLocaleDateString()}</p>
@@ -133,17 +137,23 @@ document.body.insertBefore(searchContainer, document.body.firstChild);
 async function fetchWeatherByCoords(lat, lon) {
     const weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${units}`;
     const forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=${units}`;
+    const weatherCelsius = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=metric`;
+    const forecastCelsius = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${myApiKey}&units=metric`;
     
     try {
-        const [weatherRes, forecastRes] = await Promise.all([
+        const [weatherRes, forecastRes, weatherCelsiusRes, forecastCelsiusRes ] = await Promise.all([
             fetch(weatherURL),
-            fetch(forecastURL)
+            fetch(forecastURL),
+            fetch(weatherCelsius),
+            fetch(forecastCelsius)
         ]);
-        if (weatherRes.ok && forecastRes.ok) {
+        if (weatherRes.ok && forecastRes.ok && weatherCelsiusRes.ok && forecastCelsiusRes.ok) {
             const weatherData = await weatherRes.json();
             const forecastData = await forecastRes.json();
-            displayWeather(weatherData);
-            displayForecastData(forecastData);
+            const weatherCelsiusData = await weatherCelsiusRes.json();
+            const forecastCelsiusData = await forecastCelsiusRes.json();
+            displayWeather(weatherData, weatherCelsiusData);
+            displayForecastData(forecastData, forecastCelsiusData);
         }
     } catch (err) {
         console.log("Error fetching weather:", err);
@@ -151,9 +161,13 @@ async function fetchWeatherByCoords(lat, lon) {
 }
 
 // Helper: display forecast for search
-function displayForecastData(data) {
+function displayForecastData(data, dataCelsius) {
     weatherForecastList.innerHTML = "";
+
     data.list.forEach((item) => {
+        // Filter to show only 3-hour intervals
+        if (item.dt_txt.split(" ")[1] !== "12:00:00") return;
+
         const date = new Date(item.dt * 1000);
         const temperature = Math.round(item.main.temp);
         const iconCode = item.weather[0].icon;
