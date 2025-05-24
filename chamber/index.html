@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Welcome to the Addis Ababa Chamber of Commerce. Empowering local businesses and community growth.">
+  <meta name="author" content="Kirubel Mekonen Lemu">
+  <title>Welcome | Addis Ababa Chamber of Commerce</title>
+  <link rel="icon" href="favicon.ico">
+
+  <!-- Facebook Meta Tags -->
+  <meta property="og:title" content="Addis Ababa Chamber of Commerce">
+  <meta property="og:description" content="Welcome to the Addis Ababa Chamber of Commerce. Empowering local businesses and community growth." />
+  <meta property="og:image" content="https://github.com/Kirucoderanger/wdd231/blob/main/chamber/images/chamber.png?raw=true">
+  <meta property="og:url" content="https://kirucoderanger.github.io/wdd231/chamber/index.html">
+
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="styles/normalize.css">
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="styles/large.css">
+  <link rel="stylesheet" href="styles/hero.css">
+</head>
+<body>
+  <header class="hero"  aria-roledescription="img" alt="Addis Ababa, Ethiopia - October 2017: Panorama of the Capital City of Ethiopia, Addis Ababa">
+    <div class="overlay">
+    <h1>Empowering Addis Ababa’s Businesses</h1>
+    
+    <div class="cta-buttons">
+      <a href="#join" class="btn-primary">Join Now</a>
+      <a href="#events" class="btn-secondary">Learn More</a>
+    </div>
+  </div>
+   
+    <button id="menu"  aria-label="menu" ></button>
+    </header>
+    <nav id="animated-menu">
+      <ul class="navigation">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="join.html">Join</a></li>
+        <li><a href="directory.html">Directory</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+
+
+
+    <main class="main-intro">
+    <h1>Welcome to the Addis Ababa Chamber of Commerce</h1>
+   <div class="hero-intro">
+    <a href="join.html" class="cta-button">Join the Chamber</a>
+    <h2>Empowering local businesses and fostering community growth.</h2>
+  </div>
+
+<section class="main-grid">
+  <section class="events">
+    <h2>Upcoming Events</h2>
+    <div class="event-card"> 
+      <ul>
+      <li><h3>Business Networking Breakfast</h3>
+      <p>Date: June 25, 2025</p>
+      <p>Join us for a morning of networking and collaboration.</p>
+      <a href="#events.html" class="event-link">Learn More</a>
+      </li>
+        <li><strong>Export & Trade Workshop</strong> - July 2, 2025</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="weather">
+    <h2>Weather in Addis Ababa</h2>
+    
+    <div id="current-weather"> ... </div>
+  </section>
+
+  <section class="forecast-weather">
+    <h2>5-Day Weather Forecast</h2>
+    
+    <div class="forecast-cards">
+      <div class="forecast-day" id="forecast"> ... </div>
+    </div>
+  </section>
+</section>
+
+<section class="spotlights">
+  <h2>Member Spotlights</h2>
+  <div class="spotlight-grid" id="spotlight-container">
+    <div class="spotlight-card bronze"> ... </div>
+    <div class="spotlight-card gold"> ... </div>
+    <div class="spotlight-card silver"> ... </div>
+  </div>
+</section>
+</section>
+
+
+  
+
+  
+    
+  </main>
+
+  <footer>
+    <p>Contact us: info@addischamber.org | +251-11-123-4567</p>
+    <p>&copy; <span id="year"></span> Addis Ababa Chamber of Commerce</p>
+    <p>Developed by Kirubel | Last modified: <span id="lastModified"></span></p>
+  </footer>
+
+  
+  <script src="scripts/landing.js" defer></script>
+  <script src="scripts/weather.js" defer></script>
+</body>
+</html>
