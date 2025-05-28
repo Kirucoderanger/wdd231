@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌌 Exoplanets with Images (Confirmed Results Limit)</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 2rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #000;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .card .info {
+      padding: 1rem;
+    }
+    .card .info h3 {
+      margin: 0 0 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌠 Exoplanets with Verified Images (up to 100 shown)</h1>
+  <div class="gallery" id="gallery">Loading...</div>
+
+  <script>
+    const gallery = document.getElementById('gallery');
+
+    async function getValidImage(query) {
+      const url = `https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = data.collection.items;
+        if (items.length > 0 && items[0].links) {
+          return items[0].links[0].href;
+        }
+      } catch (err) {
+        console.error('Image fetch error:', err);
+      }
+      return null;
+    }
+
+    async function loadExoplanets() {
+      try {
+        // Fetch ALL exoplanets without limit
+        //const url = `https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname+from+pscomppars&format=json`;
+         const url = "../data/exo.json";
+        const res = await fetch(url);
+        const allPlanets = await res.json();
+
+        // Shuffle for randomness
+        const shuffled = allPlanets.sort(() => 0.5 - Math.random());
+
+        const validCards = [];
+        for (let i = 0; i < shuffled.length && validCards.length < 100; i++) {
+          const planet = shuffled[i];
+          // Try with hostname first, then planet name if no hostname
+          const image = await getValidImage(planet.hostname || planet.pl_name);
+          if (image) {
+            validCards.push(`
+              <div class="card">
+                <img src="${image}" alt="${planet.pl_name}" />
+                <div class="info">
+                  <h3>${planet.pl_name}</h3>
+                  <p>Host Star: ${planet.hostname}</p>
+                </div>
+              </div>
+            `);
+          }
+        }
+
+        gallery.innerHTML = validCards.length > 0 ? validCards.join('') : '<p>No planets with images found.</p>';
+      } catch (err) {
+        console.error('Fetch error:', err);
+        gallery.innerHTML = '<p style="color:red;">Failed to load exoplanet data.</p>';
+      }
+    }
+
+    loadExoplanets();
+  </script>
+</body>
+</html>

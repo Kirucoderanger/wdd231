@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>🪐 Exoplanet Gallery</title>
+  <style>
+    body {
+        
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 2rem;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px #000;
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .card .info {
+      padding: 1rem;
+    }
+    .card .info h3 {
+      margin: 0 0 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌌 Exoplanet Explorer</h1>
+  <div class="gallery" id="gallery">Loading...</div>
+
+  <script>
+    const fallbackImages = [
+      'https://exoplanets.nasa.gov/internal_resources/456/',
+      'https://www.nasa.gov/sites/default/files/styles/full_width/public/thumbnails/image/pia23864.jpg',
+      
+      'https://www.jpl.nasa.gov/images/pia21449-16',
+      'https://www.nasa.gov/sites/default/files/thumbnails/image/kepler186f_artistconcept.jpg'
+    ];
+
+    const getImageForPlanet = async (query) => {
+      const searchUrl = `https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`;
+      try {
+        const res = await fetch(searchUrl);
+        const data = await res.json();
+        const items = data.collection.items;
+        if (items.length > 0 && items[0].links) {
+          return items[0].links[0].href;
+        }
+      } catch (e) {
+        console.error('Image fetch error:', e);
+      }
+      return fallbackImages[Math.floor(Math.random() * fallbackImages.length)];
+    };
+
+    const loadExoplanets = async () => {
+      const gallery = document.getElementById('gallery');
+      try {
+        //const url = `https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname+from+pscomppars&format=json`;
+        const url = "../data/exoplanets.json"; // Use local JSON file for testing
+        const res = await fetch(url);
+        const planets = await res.json();
+
+        // Shuffle and limit to 100
+        const shuffled = planets.sort(() => 0.5 - Math.random()).slice(0, 100);
+
+        const cards = await Promise.all(shuffled.map(async planet => {
+          const image = await getImageForPlanet(planet.hostname || planet.pl_name);
+          return `
+            <div class="card">
+              <img src="${image}" alt="${planet.pl_name}">
+              <div class="info">
+                <h3>${planet.pl_name}</h3>
+                <p>Host Star: ${planet.hostname}</p>
+              </div>
+            </div>
+          `;
+        }));
+
+        gallery.innerHTML = cards.join('');
+      } catch (err) {
+        console.error('Data fetch error:', err);
+        gallery.innerHTML = `<p style="color:red;">Failed to load exoplanet data.</p>`;
+      }
+    };
+
+    loadExoplanets();
+  </script>
+</body>
+</html>

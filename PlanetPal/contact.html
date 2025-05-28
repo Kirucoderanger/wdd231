@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact Us - PlanetPal</title>
+  <meta name="description" content="Reach out to PlanetPal for questions, ideas, or cosmic thoughts!" />
+  <meta name="author" content="Kirubel" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="contact.js" defer></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">🌍 PlanetPal</div>
+      <button id="menuToggle">☰</button>
+      <ul id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="planets.html">Planets</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Contact PlanetPal</h1>
+    <form id="contactForm" action="form-submitted.html" method="POST">
+      <label>Name: <input name="name" required /></label>
+      <label>Email: <input type="email" name="email" required /></label>
+      <label>Message: <textarea name="message" required></textarea></label>
+      <button type="submit">Send</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2025 PlanetPal</p>
+    <a href="attributions.html">Attributions</a> | 
+    <a href="video-demo.mp4">Video Demo</a>
+  </footer>
+</body>
+</html>

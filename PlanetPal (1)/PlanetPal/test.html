@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌌 Random Exoplanet Showcase</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2rem; background: #f5f5f5; }
+    h1 { margin-bottom: 1rem; }
+    .planet { background: white; padding: 1rem; margin-bottom: 1rem; border-radius: 10px; box-shadow: 0 0 5px rgba(0,0,0,0.1); }
+    .planet img { max-width: 250px; display: block; margin-top: 1rem; border-radius: 8px; }
+    .planet h2 { margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <h1>🔭 100 Random Exoplanets</h1>
+  <div id="container">Loading...</div>
+
+  <script>
+    async function fetchRandomExoplanets(limit = 100) {
+      const query = `select+pl_name,hostname,pl_orbper,pl_rade+from+ps+where+pl_name+is+not+null+order+by+rand()+limit+${limit}`;
+      const url = `https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=${query}&format=json`;
+      const res = await fetch(url);
+      return res.json();
+    }
+
+    async function fetchImage(planetName) {
+      const res = await fetch(`https://images-api.nasa.gov/search?q=${planetName}&media_type=image`);
+      const data = await res.json();
+      const items = data.collection.items;
+      return (items.length && items[0].links) ? items[0].links[0].href : null;
+    }
+
+    async function displayPlanets() {
+      const container = document.getElementById('container');
+      container.innerHTML = '';
+
+      try {
+        const planets = await fetchRandomExoplanets();
+
+        for (const planet of planets) {
+          const { pl_name, hostname, pl_orbper, pl_rade } = planet;
+          const image = await fetchImage(pl_name);
+
+          const div = document.createElement('div');
+          div.className = 'planet';
+          div.innerHTML = `
+            <h2>${pl_name}</h2>
+            <p><strong>Host Star:</strong> ${hostname}</p>
+            <p><strong>Orbital Period:</strong> ${pl_orbper ?? 'N/A'} days</p>
+            <p><strong>Radius:</strong> ${pl_rade ?? 'N/A'} Earth radii</p>
+            ${image ? `<img src="${image}" alt="${pl_name} image">` : '<p><em>No image available.</em></p>'}
+          `;
+          container.appendChild(div);
+        }
+      } catch (err) {
+        container.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+      }
+    }
+
+    window.onload = displayPlanets;
+  </script>
+</body>
+</html>

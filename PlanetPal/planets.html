@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore the Planets - PlanetPal</title>
+  <meta name="description" content="Discover the planets in our solar system with facts and visuals." />
+  <meta name="author" content="Kirubel" />
+  <link rel="icon" href="images/favicon.ico" />
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="planets.js" defer></script>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">🌍 PlanetPal</div>
+      <button id="menuToggle">☰</button>
+      <ul id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="planets.html" class="active">Planets</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h1>Explore the Planets</h1>
+    <section id="planetCards"></section>
+    <dialog id="planetModal">
+      <div id="modalContent"></div>
+      <button id="closeModal">Close</button>
+    </dialog>
+  </main>
+  <footer>
+    <p>&copy; 2025 PlanetPal</p>
+    <a href="attributions.html">Attributions</a> | 
+    <a href="video-demo.mp4">Video Demo</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exoplanet Gallery with NASA Images</title>
+  <style>
+    body { font-family: Arial; padding: 1rem; }
+    .planet-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+    }
+    img { width: 120px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<h1>Confirmed Exoplanets with NASA Images</h1>
+<div id="results">Loading...</div>
+
+<script>
+    const Application_Secret = "85cb1916516a8dcfbb99fc7b9fa29107b67f92f58f37bde6a1cfe1ea21171bf08fe6e63045e1415bf5f4982e035415e1bc1ce4c839c481f3598aee4a7b5f4d229026d894728b4aeb7959c5186e5047dfea85f2a9e1a4d559322c01099d73dffbf7fd3e0edc507b7d3cc468738d03d4a9";
+    const Application_Id = "d3678aac-be5e-4d5d-a17f-9bb563a23e2b";
+  const resultContainer = document.getElementById('results');
+
+  async function fetchExoplanets() {
+    const res = await fetch('https://api.astronomyapi.com/api/v2/bodies/exoplanets', {
+      headers: {
+        'Authorization': 'Basic ' + btoa(`${Application_Id}:${Application_Secret}`) // Replace with your Astronomy API credentials
+      }
+    });
+
+    const data = await res.json();
+    return data.data.filter(planet => planet.isConfirmed); // filter confirmed
+  }
+
+  async function searchNasaImage(query) {
+    const res = await fetch(`https://images-api.nasa.gov/search?q=${encodeURIComponent(query)}&media_type=image`);
+    const data = await res.json();
+    const items = data.collection?.items || [];
+    return items.find(item => item.links && item.links[0]?.href); // find first with image
+  }
+
+  async function populateGallery() {
+    resultContainer.innerHTML = '';
+    const planets = await fetchExoplanets();
+
+    let shown = 0;
+    for (const planet of planets) {
+      if (shown >= 100) break;
+
+      const imageItem = await searchNasaImage(planet.name);
+      if (!imageItem) continue;
+
+      const img = imageItem.links[0].href;
+      const title = imageItem.data[0].title;
+      const nasaId = imageItem.data[0].nasa_id;
+
+      const card = document.createElement('div');
+      card.className = 'planet-card';
+      card.innerHTML = `
+        <img src="${img}" alt="${planet.name}" />
+        <div>
+          <strong>${planet.name}</strong><br />
+          NASA ID: <code>${nasaId}</code><br />
+          <small>${title}</small>
+        </div>
+      `;
+      resultContainer.appendChild(card);
+      shown++;
+    }
+
+    if (shown === 0) {
+      resultContainer.innerHTML = '<p>No exoplanets with images found.</p>';
+    }
+  }
+
+  populateGallery();
+</script>
+
+</body>
+</html>

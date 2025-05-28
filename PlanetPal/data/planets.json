@@ -1,0 +1,10 @@
+[
+  {"name": "Mercury", "type": "Terrestrial", "orbit": "88 days", "image": "images/mercury.jpg"},
+  {"name": "Venus", "type": "Terrestrial", "orbit": "225 days", "image": "images/venus.jpg"},
+  {"name": "Earth", "type": "Terrestrial", "orbit": "365 days", "image": "images/earth.jpg"},
+  {"name": "Mars", "type": "Terrestrial", "orbit": "687 days", "image": "images/mars.jpg"},
+  {"name": "Jupiter", "type": "Gas Giant", "orbit": "12 years", "image": "images/jupiter.jpg"},
+  {"name": "Saturn", "type": "Gas Giant", "orbit": "29 years", "image": "images/saturn.jpg"},
+  {"name": "Uranus", "type": "Ice Giant", "orbit": "84 years", "image": "images/uranus.jpg"},
+  {"name": "Neptune", "type": "Ice Giant", "orbit": "165 years", "image": "images/neptune.jpg"}
+]
