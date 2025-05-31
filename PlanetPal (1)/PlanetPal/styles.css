@@ -27,17 +27,95 @@ nav ul li a {
 main {
   padding: 1rem;
 }
+
+#planetContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
 .planet-card {
   background: #415a77;
   margin: 1rem 0;
-  padding: 1rem;
+  padding: 0rem;
   border-radius: 10px;
 }
 .planet-img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+  width: 100%;
+  aspect-ratio: 2 / 1.25;
+  object-fit: cover;
+  border-radius: 0px;
+  display: block;
 }
+
+
+
+
+
+.tooltip {
+      position: absolute;
+      background: rgba(30, 30, 50, 0.95);
+      padding: 10px;
+      border-radius: 10px;
+      z-index: 100;
+      width: 350px;
+      
+      display: none;
+      text-align: left;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    }
+
+    .tooltip img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tooltip p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+
+    .tooltip a {
+      display: inline-block;
+      margin-top: 6px;
+      color: #7bcfff;
+      font-size: 0.85rem;
+      text-decoration: underline;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      border: 8px solid transparent;
+    }
+
+    .tooltip.top::after {
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.left::after {
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.right::after {
+      left: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: rgba(30, 30, 50, 0.95);
+    }
+
+
+
+
+
+
 @media (max-width: 600px) {
   nav ul {
     flex-direction: column;

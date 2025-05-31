@@ -6,21 +6,35 @@ const API_KEY = 'hB5ME60Ovw64Ey9FLdbxIC5dxlP79aZesIgvRQjN'; // Replace with your
 //const url = `https://api.nasa.gov/exoplanetarchive/data?api_key=${apiKey}&format=json&table=exoplanets&select=pl_name,pl_orbper,pl_rade,pl_eqt&where=pl_rade>1`;
 //const EXO_URL = `https://api.nasa.gov/exoplanetarchive/data?api_key=${API_KEY}&format=json&table=exoplanets&select=pl_name,pl_orbper,pl_rade,pl_eqt&where=pl_rade>1&order=pl_orbper&limit=100&offset=0`;
 
-//const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=k2names&where=koi_disposition%20like%20%27CANDIDATE%27&where=koi_period%3E300,koi_prad%3C2&order=koi_period&format=json&limit=100&offset=0&api_key=" + API_KEY;
+//const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CANDIDATE%27&where=koi_period%3E300,koi_prad%3C2&order=koi_period&format=json&limit=100&offset=0&api_key=" + API_KEY;
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CANDIDATE%27&where=koi_period%3E300,koi_prad%3C2&order=koi_period&format=json&limit=100&offset=0" ;
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname,discoverymethod,disc_year+from+ps&format=json&limit=100&offset=0&api_key=" + API_KEY;
 //const EXO_URL = `https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname,discoverymethod,disc_year+from+ps&format=json&limit=100&offset=0&api_key=${API_KEY}`;
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname,discoverymethod,disc_year+from+ps&format=json&limit=100&offset=0";
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,pl_masse,ra,dec+from+ps+where+upper(soltype)+like+'%25CONF%25'+and+pl_masse+between+0.5+and+2.0&format=json&limit=100&offset=0&api_key=" + API_KEY;
+
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?&table=k2names&format=json&where=pl_kepflag=1&order=pl_name&api_key=" + API_KEY;
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?&table=exoplanets&format=ipac&where=pl_kepflag=1&order=pl_name&limit=100&offset=0";
-const EXO_URL = "../data/exoplanets.json"; 
+//const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=Cumulative&format=json&limit=100&offset=0&api_key=" + API_KEY;
+const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=Cumulative&where=koi_disposition%20like%20%27CONFIRMED%27&format=json&limit=100&offset=0&api_key=" + API_KEY;
+//const EXO_URL = "../data/exoplanets.json"; 
+//const EXO_URL = "../data/exoplanets1.json";
+const ImageUrl = "../data/exoplanetimgurl.json";
 // Local JSON file for testing
 
 
 document.getElementById('menuToggle').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('show');
 });
+
+const tooltip = document.getElementById('tooltip');
+const tooltipImg = document.getElementById('tooltipImg');
+const tooltipDesc = document.getElementById('tooltipDesc');
+const tooltipName = document.getElementById('tooltipName');
+
+const tooltipLink = document.getElementById('tooltipLink');
+
+let hideTimeout = null;
 
 async function getExoplanets() {
   try {
@@ -58,32 +72,219 @@ async function getExoplanets() {
     document.getElementById('planetContainer').innerHTML = ''; // Clear previous content
     document.getElementById('planetContainer').classList.add('grid'); // Add grid class for styling*/
 
+    let urlIndex = 0;
     data.forEach((planet) => {
-      const { pl_name, disc_year, pl_bmassj, pl_radj } = planet;
-      renderPlanetCard(pl_name, disc_year, pl_bmassj, pl_radj);
-      fetchPlanetImage(pl_name);
+      
+      const { kepoi_name, kepler_name, disc_year, pl_bmassj, pl_radj } = planet;
+      renderPlanetCard(kepoi_name, kepler_name, disc_year, pl_bmassj, pl_radj, planet);
+      fetchPlanetImage(kepler_name, urlIndex, planet);
+      
+      urlIndex = urlIndex + 1;
+      console.log(urlIndex);
     });
   } catch (error) {
     console.error('Exoplanet fetch failed:', error);
   }
 }
 
-function renderPlanetCard(name, year, mass, radius) {
+function renderPlanetCard(name, kname, year, mass, radius, planet) {
   const container = document.getElementById('planetContainer');
   const card = document.createElement('div');
   card.className = 'planet-card';
-  card.dataset.planet = name;
+  card.dataset.planet = kname;
   card.innerHTML = `
     <img class="planet-img" src="" alt="Planet Image" />
-    <h3>${name}</h3>
-    <p>Discovered: ${year}</p>
-    <p>Mass (Jupiter): ${mass}</p>
-    <p>Radius (Jupiter): ${radius}</p>
+    <h3>${name}/${kname}</h3>
+    
   `;
+
+  //<p>Discovered: ${year}</p>
+    //<p>Mass (Jupiter): ${mass}</p>
+    //<p>Radius (Jupiter): ${radius}</p>
+
+    card.addEventListener('mouseenter', (e) => {
+      const url = "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg";
+      clearTimeout(hideTimeout);
+      showTooltip(e, kname, name, url, card);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      // Delay hiding to check if entering tooltip
+      hideTimeout = setTimeout(() => {
+        if (!tooltip.matches(':hover')) {
+          tooltip.style.display = 'none';
+        }
+      }, 100);
+    });
+
   container.appendChild(card);
 }
 
-async function fetchPlanetImage(planetName) {
+
+
+tooltip.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimeout);
+  });
+
+  tooltip.addEventListener('mouseleave', () => {
+    tooltip.style.display = 'none';
+  });
+
+  function showTooltip(event, planet, name, url, target) {
+    tooltip.style.display = 'block';
+    tooltipImg.src = url;
+    tooltipDesc.textContent = name;
+    tooltipName.textContent = planet;
+    tooltipLink.href = planet;
+
+    const rect = target.getBoundingClientRect();
+    const tooltipWidth = 500;
+    const tooltipHeight = 500;
+
+    tooltip.classList.remove('top', 'left', 'right','bottom');
+    
+
+    let top = rect.top - tooltipHeight - 16;
+    let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+    let position = 'top';
+
+    if (top < 0) {
+      if (rect.left + tooltipWidth + 30 < window.innerWidth) {
+        position = 'right';
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.right + 10;
+      } else {
+        position = 'left';
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.left - tooltipWidth - 10;
+      }
+    }
+
+    if (left < 0) left = 10;
+    if (left + tooltipWidth > window.innerWidth) {
+      left = window.innerWidth - tooltipWidth - 10;
+    }
+
+    tooltip.classList.add(position);
+    tooltip.style.top = `${top + window.scrollY}px`;
+    tooltip.style.left = `${left + window.scrollX}px`;
+  }
+
+
+  /* 
+  tooltip.classList.remove('top', 'left', 'right', 'bottom');
+
+    let top = rect.top - tooltipHeight - 16;
+    let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+    let position = 'top';
+
+    // If tooltip overflows above, try below
+    if (top < window.scrollY) {
+      top = rect.bottom + 16;
+      position = 'bottom';
+    }
+
+    // If tooltip overflows below, try right or left
+    if (top + tooltipHeight > window.innerHeight + window.scrollY) {
+      if (rect.right + tooltipWidth + 10 < window.innerWidth) {
+        position = 'right';
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.right + 10;
+      } else if (rect.left - tooltipWidth - 10 > 0) {
+        position = 'left';
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.left - tooltipWidth - 10;
+      } else {
+        // fallback to top
+        position = 'top';
+        top = rect.top - tooltipHeight - 16;
+        left = rect.left + rect.width / 2 - tooltipWidth / 2;
+      }
+    }
+
+    // Clamp left/right to viewport
+    if (left < 10) left = 10;
+    if (left + tooltipWidth > window.innerWidth) {
+      left = window.innerWidth - tooltipWidth - 10;
+    }
+
+    // Clamp top/bottom to viewport
+    if (top < window.scrollY + 10) top = window.scrollY + 10;
+    if (top + tooltipHeight > window.innerHeight + window.scrollY) {
+      top = window.innerHeight + window.scrollY - tooltipHeight - 10;
+    }
+
+    tooltip.classList.add(position);
+    tooltip.style.top = `${top}px`;
+    tooltip.style.left = `${left}px`;
+  
+  */
+
+
+
+
+
+
+
+async function fetchPlanetImage(planetName, urlIndex, Planet) {
+
+  const res = await fetch(ImageUrl);
+  const data = await res.json();
+  console.log(planetName);
+  console.log(urlIndex);
+  //console.log(data);
+  console.log(data[urlIndex].url);
+  const imageItem = data[urlIndex].url;
+  const imgUrl = imageItem;
+      const imgElem = document.querySelector(`[data-planet="${planetName}"] .planet-img`);
+      if (imgElem){
+        imgElem.src = imgUrl;
+        tooltipImg.src = imgUrl;
+      } 
+  
+
+
+  /*const jsonString = '[{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]';
+  const jsonArray = JSON.parse(jsonString);
+
+  console.log(jsonArray[0]); // Output: { name: 'John', age: 30 }
+  console.log(jsonArray[1].name); // Output: Jane
+
+  const jsonString2 = '{"users": [{"name": "John", "age": 30}, {"name": "Jane", "age": 25}]}';
+  const jsonObject = JSON.parse(jsonString2);
+
+  console.log(jsonObject.users[0].name); // Output: John*/
+
+
+  /*try {
+    const res = await fetch(ImageUrl.url[urlIndex]);
+    const data = await res.json();
+    console.log(data);
+    const jsonArray = JSON.parse(data);
+
+    if (!res.ok) {
+      console.error('HTTP error:', res.status);
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    
+    console.log(urlIndex);
+
+    const imageItem = jsonArray[urlIndex].url;
+
+    console.log('Exoplanets image url fetched:', imageItem);
+    if (imageItem) {
+      const imgUrl = imageItem.links[0].href;
+      const imgElem = document.querySelector(`[data-planet="${planetName}"] .planet-img`);
+      if (imgElem) imgElem.src = imgUrl;
+    }
+  } catch (err) {
+    console.warn(`no image  for ${planetName}`, err);
+  }*/
+  
+}
+
+/*async function fetchPlanetImage(planetName) {
   //console.log(`Fetching image for ${planetName}`);
   // Use the NASA Images API to search for images related to the planet
   // Note: The NASA Images API may not have images for all exoplanets, so handle cases where no image is found
@@ -103,7 +304,7 @@ async function fetchPlanetImage(planetName) {
   } catch (err) {
     console.warn(`No image for ${planetName}`, err);
   }
-}
+}*/
 
   
 

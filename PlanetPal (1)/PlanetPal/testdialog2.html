@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Planet Pal Smart Tooltip</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0c10;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+      position: relative;
+    }
+
+    .planet {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .planet img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(30, 30, 50, 0.95);
+      padding: 10px;
+      border-radius: 10px;
+      z-index: 100;
+      width: 220px;
+      display: none;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    }
+
+    .tooltip img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      border: 8px solid transparent;
+    }
+
+    /* Default top pointer */
+    .tooltip.top::after {
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.left::after {
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.right::after {
+      left: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.bottom::after {
+      top: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: rgba(30, 30, 50, 0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Planet Pal Gallery</h1>
+  <div class="grid" id="planetGrid"></div>
+
+  <div class="tooltip" id="tooltip">
+    <img src="" id="tooltipImg" alt="Preview" />
+  </div>
+
+  <script>
+     const planets = [
+      { name: "Mercury", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "Closest to the Sun" },
+      { name: "Venus", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "Covered in thick clouds" },
+      { name: "Earth", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "You are here 🌍" },
+      { name: "Mars", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "The Red Planet" }
+      // Add more planets as needed
+    ];
+
+
+    const grid = document.getElementById('planetGrid');
+    const tooltip = document.getElementById('tooltip');
+    const tooltipImg = document.getElementById('tooltipImg');
+
+    planets.forEach(planet => {
+      const div = document.createElement('div');
+      div.className = 'planet';
+      div.innerHTML = `<img src="${planet.img}" alt="${planet.name}" />`;
+      div.addEventListener('mouseenter', (e) => showTooltip(e, planet.full, div));
+      div.addEventListener('mouseleave', hideTooltip);
+      grid.appendChild(div);
+    });
+
+    function showTooltip(event, imgUrl, target) {
+      tooltip.style.display = 'block';
+      tooltipImg.src = imgUrl;
+
+      const rect = target.getBoundingClientRect();
+      const tooltipWidth = 220;
+      const tooltipHeight = 180;
+
+      tooltip.classList.remove('top', 'left', 'right', 'bottom');
+
+      let top = rect.top - tooltipHeight - 16;
+      let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+      let position = 'top';
+
+      // Avoid top overflow
+      if (top < 0) {
+        if (rect.left + tooltipWidth + 30 < window.innerWidth) {
+          position = 'right';
+          top = rect.top + rect.height / 2 - tooltipHeight / 2;
+          left = rect.right + 10;
+        } else {
+          position = 'left';
+          top = rect.top + rect.height / 2 - tooltipHeight / 2;
+          left = rect.left - tooltipWidth - 10;
+        }
+      }
+
+      // Avoid horizontal overflow
+      if (left < 0) {
+        left = rect.left;
+      } else if (left + tooltipWidth > window.innerWidth) {
+        left = window.innerWidth - tooltipWidth - 10;
+      }
+
+      tooltip.classList.add(position);
+      tooltip.style.top = `${top + window.scrollY}px`;
+      tooltip.style.left = `${left + window.scrollX}px`;
+    }
+
+    function hideTooltip() {
+      tooltip.style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>

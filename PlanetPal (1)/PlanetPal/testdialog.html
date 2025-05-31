@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planet Pal Grid</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0c10;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+    }
+
+    .planet {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .planet img {
+      width: 100%;
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+
+    .planet:hover img {
+      transform: scale(1.05);
+    }
+
+    .hover-dialog {
+      position: absolute;
+      top: -230px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 250px;
+      background: rgba(20, 20, 30, 0.95);
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+      padding: 1rem;
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .hover-dialog img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tip {
+      font-size: 0.85rem;
+      color: #a0aec0;
+    }
+
+    .planet:hover .hover-dialog {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -10px); }
+      to   { opacity: 1; transform: translate(-50%, 0); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Planet Pal Gallery</h1>
+
+  <div class="grid" id="planetGrid"></div>
+
+  <script>
+    const planets = [
+      { name: "Mercury", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "Closest to the Sun" },
+      { name: "Venus", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "Covered in thick clouds" },
+      { name: "Earth", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "You are here 🌍" },
+      { name: "Mars", img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg", tip: "The Red Planet" }
+      // Add more planets as needed
+    ];
+
+    const grid = document.getElementById('planetGrid');
+
+    planets.forEach(planet => {
+      const div = document.createElement('div');
+      div.className = 'planet';
+      div.innerHTML = `
+        <img src="${planet.img}" alt="${planet.name}" />
+        <div class="hover-dialog">
+          <img src="${planet.full}" alt="${planet.name} large preview" />
+          <div class="tip">${planet.tip}</div>
+        </div>
+      `;
+      grid.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>

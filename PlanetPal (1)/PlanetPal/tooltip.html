@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planet Pal Tooltip</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0c10;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 20px;
+    }
+
+    .planet {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .planet img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: rgba(30, 30, 50, 0.95);
+      padding: 10px;
+      border-radius: 10px;
+      z-index: 100;
+      width: 240px;
+      display: none;
+      text-align: left;
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    }
+
+    .tooltip img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tooltip p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+
+    .tooltip a {
+      display: inline-block;
+      margin-top: 6px;
+      color: #7bcfff;
+      font-size: 0.85rem;
+      text-decoration: underline;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      border: 8px solid transparent;
+    }
+
+    .tooltip.top::after {
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.left::after {
+      right: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: rgba(30, 30, 50, 0.95);
+    }
+
+    .tooltip.right::after {
+      left: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: rgba(30, 30, 50, 0.95);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Planet Pal Gallery</h1>
+  <div class="grid" id="planetGrid"></div>
+
+  <div class="tooltip" id="tooltip">
+    <img src="" id="tooltipImg" alt="Preview" />
+    <p id="tooltipDesc">Planet description here.</p>
+    <a href="#" target="_blank" id="tooltipLink">View More</a>
+  </div>
+
+  <script>
+    const planets = [
+      {
+        name: "Mercury",
+        img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        desc: "Mercury is the closest planet to the Sun. It's small and rocky.",
+        link: "https://en.wikipedia.org/wiki/Mercury_(planet)"
+      },
+      {
+        name: "Venus",
+        img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        desc: "Venus is similar in size to Earth but has a toxic atmosphere.",
+        link: "https://en.wikipedia.org/wiki/Venus"
+      },
+      {
+        name: "Earth",
+        img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        desc: "Earth is the only planet known to support life.",
+        link: "https://en.wikipedia.org/wiki/Earth"
+      },
+      {
+        name: "Mars",
+        img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        desc: "Mars is known as the Red Planet and may have had water.",
+        link: "https://en.wikipedia.org/wiki/Mars"
+      },
+      {
+        name: "Jupiter",
+        img: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        full: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg",
+        desc: "Jupiter is the largest planet with a massive storm system.",
+        link: "https://en.wikipedia.org/wiki/Jupiter"
+      }
+    ];
+
+     const grid = document.getElementById('planetGrid');
+  const tooltip = document.getElementById('tooltip');
+  const tooltipImg = document.getElementById('tooltipImg');
+  const tooltipDesc = document.getElementById('tooltipDesc');
+  const tooltipLink = document.getElementById('tooltipLink');
+
+  let hideTimeout = null;
+
+  planets.forEach(planet => {
+    const div = document.createElement('div');
+    div.className = 'planet';
+    div.innerHTML = `<img src="${planet.img}" alt="${planet.name}" />`;
+
+    div.addEventListener('mouseenter', (e) => {
+      clearTimeout(hideTimeout);
+      showTooltip(e, planet, div);
+    });
+
+    div.addEventListener('mouseleave', () => {
+      // Delay hiding to check if entering tooltip
+      hideTimeout = setTimeout(() => {
+        if (!tooltip.matches(':hover')) {
+          tooltip.style.display = 'none';
+        }
+      }, 100);
+    });
+
+    grid.appendChild(div);
+  });
+
+  tooltip.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimeout);
+  });
+
+  tooltip.addEventListener('mouseleave', () => {
+    tooltip.style.display = 'none';
+  });
+
+  function showTooltip(event, planet, target) {
+    tooltip.style.display = 'block';
+    tooltipImg.src = planet.full;
+    tooltipDesc.textContent = planet.desc;
+    tooltipLink.href = planet.link;
+
+    const rect = target.getBoundingClientRect();
+    const tooltipWidth = 240;
+    const tooltipHeight = 240;
+
+    tooltip.classList.remove('top', 'left', 'right');
+
+    let top = rect.top - tooltipHeight - 16;
+    let left = rect.left + rect.width / 2 - tooltipWidth / 2;
+    let position = 'top';
+
+    if (top < 0) {
+      if (rect.left + tooltipWidth + 30 < window.innerWidth) {
+        position = 'right';
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.right + 10;
+      } else {
+        position = 'left';
+        top = rect.top + rect.height / 2 - tooltipHeight / 2;
+        left = rect.left - tooltipWidth - 10;
+      }
+    }
+
+    if (left < 0) left = 10;
+    if (left + tooltipWidth > window.innerWidth) {
+      left = window.innerWidth - tooltipWidth - 10;
+    }
+
+    tooltip.classList.add(position);
+    tooltip.style.top = `${top + window.scrollY}px`;
+    tooltip.style.left = `${left + window.scrollX}px`;
+  }
+  </script>
+
+</body>
+</html>

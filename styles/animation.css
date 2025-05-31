@@ -18,7 +18,7 @@
      animation: pulse 1.5s ease-in-out infinite ;
 
 }
-
+/*
 @keyframes spin {
     100% {transform: rotate(360deg);}
 }
@@ -26,7 +26,7 @@
 @keyframes pulse {
     0%, 100% {transform: translate(-50%, -50%) scale(1);}
     50% {transform: translate(-50%, -50%) scale(1.25);}
-}
+}*/
 
 .loader-t {
     width: 50px;
@@ -72,4 +72,41 @@
     padding: 2rem;
     background: #fff;
     border-radius: 1rem;
+}
+/*
+@keyframes bounce-x {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(60px); }
+}
+
+#test {
+    animation: bounce-x 0.75s linear infinite;
+}
+*/
+
+/*#test {
+  animation: slidein 1s linear 1s infinite running alternate;
+}
+
+@keyframes slidein {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100px);
+  }
+}*/
+
+#test {
+    
+    animation: 1s linear 1s infinite running alternate slidein;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100px);
+    }
 }
