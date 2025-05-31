@@ -18,7 +18,7 @@
      animation: pulse 1.5s ease-in-out infinite ;
 
 }
-/*
+
 @keyframes spin {
     100% {transform: rotate(360deg);}
 }
@@ -26,7 +26,7 @@
 @keyframes pulse {
     0%, 100% {transform: translate(-50%, -50%) scale(1);}
     50% {transform: translate(-50%, -50%) scale(1.25);}
-}*/
+}
 
 .loader-t {
     width: 50px;
