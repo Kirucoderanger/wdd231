@@ -22,16 +22,9 @@
   <link rel="stylesheet" href="styles/join.css">
 </head>
 <body>
-  <header class="hero"  aria-roledescription="img" aria-label="hero image">
-    <div class="overlay">
-    <p>Empowering Addis Ababa’s Businesses</p>
-    
-    <div class="cta-buttons">
-      <a href="#join" class="btn-primary">Join Now</a>
-      <a href="#events" class="btn-secondary">Learn More</a>
-    </div>
-  </div>
-   
+  <header class="directory-header">
+    <img src="images/logo.png" alt="Addis Ababa Chamber of Commerce Logo" width="34" height="40" loading="lazy">
+    <p>Addis Ababa Chamber of Commerce</p>
     <button id="menu"  aria-label="menu" ></button>
     </header>
     <nav id="animated-menu">
@@ -52,7 +45,8 @@
     <main class="join">
     <h1>Join Us Addis Ababa Chamber of Commerce</h1>
     <section class="form-card">
-   <form method="get" action="thankyou.html" class="form">
+   <form method="GET" action="thankyou.html" class="form">
+    
     <label>
       First Name:
       <input type="text" name="firstName" required title="First Name" autocomplete="given-name" />
@@ -75,8 +69,9 @@
 
     <label>
       Mobile Phone:
-      <input type="tel" name="phone" required title="Mobile Phone Number" autocomplete="tel" />
+      <input type="tel" name="phone" required title="Mobile Phone Number" autocomplete="tel" placeholder=""/>
     </label>
+
 
     <label>
       Organization Name:
@@ -168,6 +163,7 @@
 
   
   <script src="scripts/join.js" defer></script>
+  
  
 </body>
 </html>
