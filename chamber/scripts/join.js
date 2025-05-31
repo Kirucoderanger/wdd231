@@ -18,16 +18,24 @@ document.addEventListener("DOMContentLoaded", () => {
   lastModifiedSpan.textContent = document.lastModified;
 });
 
-function openModal(id) {
+/*function openModal(id) {
       document.getElementById(id).style.display = 'flex';
     }
     function closeModal(e) {
       if (e.target.classList.contains('modal')) {
         e.target.style.display = 'none';
       }
-    }
+    }*/
     
     // Auto fill timestamp on load
     document.getElementById("timestamp").value = new Date().toISOString();
-    //const timeStamp = new Date().toISOString();
-    //document.getElementById("timestamp").value = timeStamp;
+    
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('active');
+    }
+    function closeModal(e) {
+      if (e.target.classList.contains('modal')) {
+        e.target.classList.remove('active');
+      }
+    }
