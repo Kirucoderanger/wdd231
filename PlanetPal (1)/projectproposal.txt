@@ -1,0 +1,42 @@
+Project Proposal: Planet Pal Website
+Project Subject
+Planet Pal is an educational and interactive website that explores the fascinating world of exoplanets—planets beyond our solar system. 
+The platform aims to inspire curiosity about space science and astronomy through engaging visuals, simplified scientific explanations, 
+and interactive learning tools.
+
+Project Description
+Planet Pal is a web-based platform designed to make the study of exoplanets fun and accessible for students, space enthusiasts, 
+and the general public. The website will feature:
+
+Exoplanet Profiles: A growing catalog of real exoplanets discovered by space telescopes like Kepler and TESS, 
+each with a profile showing its size, distance, temperature, and potential habitability.
+
+Interactive Star Map: A visual tool to explore star systems and their exoplanets in 3D space.
+
+Learning Hub: Articles, videos, and infographics explaining concepts like transit method, radial velocity, habitable zones, 
+and planetary types (gas giants, super-Earths, etc.).
+
+Build-a-Planet Game: A simulation where users create their own exoplanet and see how changes in size, orbit, 
+and atmosphere affect its environment.
+
+News & Discoveries: A blog-style section highlighting the latest findings in exoplanet research and astronomy missions.
+
+Planet Pal Quizzes and Challenges: To test knowledge and encourage deeper exploration of the content.
+
+The site will be mobile-friendly and styled with a space-themed design to spark imagination and discovery.
+
+Project Reason and Purpose
+The purpose of the Planet Pal website is to make exoplanet science approachable and exciting, 
+particularly for young learners and those new to astronomy.
+Key reasons for this project include:
+
+Promoting STEM Education: Space exploration is a gateway to broader interest in science, technology, engineering, and math (STEM).
+
+Public Engagement: With missions like JWST and TESS capturing the world’s attention, 
+there is a growing interest in exoplanets that needs accessible educational content.
+
+Filling the Knowledge Gap: Many educational websites are either too technical or overly simplified. 
+Planet Pal bridges that gap with accurate, interactive, and age-appropriate material.
+
+Encouraging Curiosity: By letting users explore real and imaginary worlds, 
+Planet Pal fuels imagination and the human desire to explore the universe.

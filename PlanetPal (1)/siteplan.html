@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive JavaScript Learning Platform">
+    <title>Website Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .wireframe img {
+            max-width: 100%;
+            height: auto;
+        }
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        button.primary {
+            background-color: #00C9A7;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button.secondary {
+            background-color: #FFD700;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button.secondary:hover {
+            background-color: #E6C200;
+        }
+
+        button.primary:hover {
+            background-color: #008F7A;
+        }
+        body.dark-mode {
+            background-color: #1E1E2E;
+            color: #FFFFFF;
+        }
+
+        body.light-mode {
+            background-color: #F5F5F5;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <button id="themeToggle" class="primary">Switch to Light Mode</button>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.classList.contains('light-mode')) {
+                body.classList.remove('light-mode');
+                body.classList.add('dark-mode');
+                themeToggle.textContent = 'Switch to Light Mode';
+            } else {
+                body.classList.remove('dark-mode');
+                body.classList.add('light-mode');
+                themeToggle.textContent = 'Switch to Dark Mode';
+            }
+        });
+        // Set dark mode as the default theme
+        body.classList.add('dark-mode');
+        themeToggle.textContent = 'Switch to Light Mode';
+    </script>
+    <h1>Website Plan</h1>
+    <div class="section">
+        <h2>Site Name</h2>
+        <p>Domain Name: <strong>spadeJS.com</strong></p>
+        <ul>
+            <li><strong>Domain Name: <strong>spadeJS.com</strong></strong>
+                <ul>
+                    <li>Spading JavaScript, which implies digging deep into JavaScript learning</li>
+                    <li>Spade" Represents Digging & Discovery – Just like a spade is used to dig into the ground, SpadeJS symbolizes digging deep into JavaScript concepts.</li>
+                    <li>Short & Memorable – It’s concise, easy to remember, and brandable.</li>
+                    <li>Tech-Savvy Feel – "JS" immediately signals it’s about JavaScript, making it clear to developers.</li>
+                    <li>Unique Yet Relevant – Unlike generic names like "LearnJS" or "JSPlayground," it has a distinct identity while still conveying hands-on learning.</li>
+                </ul>
+            </li>
+        </ul>
+        <p>Logo: <img src="images/spadeJS.webp" alt="Site Logo " width="150"> </p>
+        <p>Site Logo Description: It integrates a spade (shovel) icon with JavaScript elements, using deep blue and vibrant yellow for a professional and creative look</p>
+
+    </div>
+
+    <div class="section">
+        <h2>Site Purpose</h2>
+        <p>The purpose of this website is to provide users with an interactive learning platform focused on teaching JavaScript. It aims to provide a learning experience specifically DOM manipulation, event handling, and basic programming concepts through hands-on exercises and challenges and to bridge the gap between theory and application while making learning fun and interactive.</p>
+    </div>
+
+    <div class="section">
+        <h2>Scenarios</h2>
+        <ul>
+            <li><strong>General Questions (About the Platform):</strong>
+                <ul>
+                    <li>What is SpadeJS.com, and how does it work?</li>
+                    <li>Is this platform suitable for beginners?</li>
+                    <li>How is SpadeJS different from other JavaScript learning platforms?</li>
+                    <li>Do I need any prior coding experience to start?</li>
+                    <li>Is the platform free, or do I need to pay for access?</li>
+                </ul>
+            </li>
+            <li><strong> Learning & Course Structure:</strong>
+                <ul>
+                    <li>What topics will I learn here? (e.g., DOM manipulation, events, functions)</li>
+                    <li>How is the learning structured—are there lessons, exercises, or challenges?</li>
+                    <li>Are there interactive exercises, or is it just reading material?</li>
+                    <li>Do you provide real-world projects to practice JavaScript?</li>
+                    <li>Can I track my progress as I learn?</li>
+                    <li>How much time does it take to complete the learning path?</li>
+                </ul>
+            </li>
+            <li><strong>Hands-on & Interactive Features:</strong>
+                <ul>
+                    <li>Does the platform provide a code editor for practice?</li>
+                    <li>Can I see instant feedback when I write code?</li>
+                    <li>Are there challenges or quizzes to test my understanding?</li>
+                    <li>Can I save my code and come back later?</li>
+                </ul>
+            </li>
+            <li><strong>GSupport & Community:</strong>
+                <ul>
+                    <li>What if I get stuck—do you provide hints or solutions?</li>
+                    <li>Is there a forum or community where I can ask questions?</li>
+                    <li>Can I get help from mentors or instructors?</li>
+                </ul>
+            </li>
+            <li><strong>Advanced & Career-Related:</strong>
+                <ul>
+                    <li>Does this platform cover advanced JavaScript topics like async/await or APIs?</li>
+                    <li>Can I build projects to add to my portfolio?</li>
+                    <li>How does learning here help me get a job as a JavaScript developer?</li>
+                    <li>Do you offer certificates or proof of completion?</li>
+                </ul>
+            </li>
+            <li><strong>Technical & Access Questions:</strong>
+                <ul>
+                    <li>Can I access SpadeJS from mobile devices?</li>
+                    <li>Do I need to install any software, or does everything run in the browser?</li>
+                    <li>Is there a way to reset my progress and start over?</li>
+                    <li>Do I need to create an account to use the platform?</li>
+                </ul>
+            </li>
+            
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🎨Color Schema</h2>
+        <h3>Color:Hex Code Usage</h3>
+        <p>Primary Color: <span style="color: #0056b3;">#0056b3</span></p>
+        <p>Secondary Color: <span style="color: #f4a261;">#f4a261</span></p>
+        <p>Dark Blue	#1E1E2E	Background (Dark Mode): <span style="color: #1E1E2E;">#1E1E2E</span></p>
+        <p>Light Gray	#F5F5F5	Background (Light Mode): <span style="color: #F5F5F5;">#F5F5F5</span></p>
+        <p>Text Color: <span style="color: #333;">#333</span></p>
+        <p>Cyan	    #00C9A7	Primary Buttons & Highlights<span style="color: #00C9A7;">#00C9A7</span></p>
+        <p>Yellow	#FFD700	Secondary Buttons, Warnings<span style="color: #FFD700;">#FFD700</span></p>
+        <p>Purple	#6A5ACD	Links & Interactive Elements<span style="color: #6A5ACD;">#6A5ACD</span></p>
+        <p>White	#FFFFFF	Text (Dark Mode)<span style="color: #FFFFFF;">#FFFFFF</span></p>
+        <p>Black	#000000	Text (Light Mode)<span style="color: #000000;">#000000</span></p>
+        <p>✅ Dark mode as default (easier on developers' eyes).</p>
+        <p>✅ High contrast for readability (cyan & yellow for emphasis).</p>
+        <p>✅ Clean & modern design with a mix of dark and vibrant colors.</p>
+  
+    </div>
+
+    <div class="section">
+        <h2>📌 Typography Guide</h2>
+        <p>Font Family	Usage</p>
+        <p>Primary Font: Arial, sans-serif</p>
+        <p>Secondary Font: Georgia, serif</p>
+        <p>Montserrat (Sans-Serif)	Headings (h1, h2, h3)</p>
+        <p>Inter (Sans-Serif)	Body Text</p>
+        <p>Fira Code (Monospace)	Code Blocks & Editor</p>
+        <p>✅ Montserrat is clean and modern for headings.</p>
+        <p>✅ Inter is easy to read for body text.</p>
+        <p>✅ Fira Code enhances the coding experience with ligatures.</p>
+
+        
+    </div>
+    <div>
+        <p>📂 Project Folder Structure</p>
+        <p>/interactive-js-learning</p>
+        <p>│── /css</p>
+        <p>│   ├── styles.css</p>
+        <p>│── /scripts</p>
+        <p>│   ├── main.js</p>
+        <p>│── /images</p>
+        <p>│   ├── logo.png</p>
+        <p>│── index.html         (Home Page)</p>
+        <p>│── tutorials.html     (Tutorials Page)</p>
+        <p>│── playground.html    (Code Playground)</p>
+        <p>│── challenges.html    (Challenges & Quizzes)</p>
+        <p>│── forum.html         (Community Forum)</p>
+        <p>________________________________________</p>
+        <p>📜 1️⃣ index.html (Home Page)</p>
+
+    </div>
+
+    <div class="section wireframe">
+        <h2>Wireframe</h2>
+        <p>Below is a basic wireframe of the homepage layout:</p>
+        <img src="images/large (1).webp" alt="Wireframe of the homepage large">
+        <img src="images/small.webp" alt="Wireframe of the homepage small">
+        <img src="images/wireframelarge.png" alt="Wireframe of the homepage large">
+        <img src="images/wireframesmall.png" alt="Wireframe of the homepage small">
+    </div>
+</body>
+</html>
