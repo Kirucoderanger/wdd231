@@ -146,9 +146,10 @@
       max-width: 480px;  
       padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
       transition: transform 0.3s;
       color: white;
+      
     }
     .card:hover {
       transform: scale(1.02);
@@ -157,11 +158,31 @@
       color: white;
       text-decoration: underline;
       cursor: pointer;
+      
     }
-    .card:nth-child(1) { background-color: #6c757d; }
-    .card:nth-child(2) { background-color: #cd7f32; }
-    .card:nth-child(3) { background-color: #c0c0c0; }
-    .card:nth-child(4) { background-color: #ffd700; }
+    /* unvisited link */
+.card a:link {
+  color: red;
+}
+
+/* visited link */
+.card a:visited {
+  color: green;
+}
+
+/* mouse over link */
+.card a:hover {
+  color: hotpink;
+}
+
+/* selected link */
+.card a:active {
+  color: blue;
+}
+    .card:nth-child(1) { background-color: rgba(0, 0, 125,1); }
+    .card:nth-child(2) { background-color: rgba(0, 27, 50,1); }
+    .card:nth-child(3) { background-color: rgba(0, 0, 92,.7); }
+    .card:nth-child(4) { background-color: rgba(99, 85, 10, 1); }
     @keyframes fadeInCards {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }

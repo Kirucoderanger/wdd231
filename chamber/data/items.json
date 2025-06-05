@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Unity Park",
+    "address": "Grand Palace, Gulele, Addis Ababa, Ethiopia",
+    "description": "Unity Park showcases Ethiopia’s rich heritage, with restored royal compounds, wildlife enclosures, and cultural exhibitions.",
+    "image": "unitypark.webp"
+  },
+  {
+    "name": "National Museum",
+    "address": "King George VI St, Addis Ababa Ethiopia",
+    "description": "Home of the famous fossil ‘Lucy,’ this museum exhibits artifacts spanning Ethiopia’s ancient and modern history.",
+    "image": "lucy.webp"
+  },
+  {
+    "name": "Meskel Square",
+    "address": "Meskel Square, Kirkos, Addis Ababa Ethiopia",
+    "description": "A central gathering spot for major celebrations and festival, Meskel Square is a cultural and social heart of the city.",
+    "image": "meskelsquare.webp"
+  },
+  {
+    "name": "Entoto Natural Park",
+    "address": "Entoto Hills Entoto, Addis Ababa Ethiopia",
+    "description": "Escape the city with hiking trails, panoramic views, and clean air in this vast ecological park on Entoto Hills.",
+    "image": "Entoto.webp"
+  },
+  {
+    "name": "Martyrs Memorial",
+    "address": "Bole Rd, Addis Ababa",
+    "description": "A somber yet educational museum remembering victims of the Derg regime, promoting peace and remembrance.",
+    "image": "redterror.webp"
+  },
+  {
+    "name": "Addis Mercato",
+    "address": "Merkato District, Addis Ketema",
+    "description": "One of Africa’s largest open-air markets, offering everything from spices and textiles to crafts and electronics.",
+    "image": "addismerkato.webp"
+  },
+  {
+    "name": "Holy Trinity Cathedral",
+    "address": "Arat Kilo, Addis Ababa",
+    "description": "A majestic Ethiopian Orthodox cathedral and the burial place of Emperor Haile Selassie, Ras Tafari Makonnen.",
+    "image": "holy-trinity.webp"
+  },
+  {
+    "name": "Friendship Park",
+    "address": "Ras Mekonnen Ave, Addis Ababa",
+    "description": "A lush, urban park ideal for family outings, hosting fountains, flowers, and leisure paths, lake with fishing ground.",
+    "image": "friendship-park.webp"
+  }
+]
