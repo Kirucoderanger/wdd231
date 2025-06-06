@@ -6,5 +6,7 @@
       }
        .card img:hover {
       transform: var(--hover-effect);
+      width: 450px;
+      height: auto;
     }
     }
