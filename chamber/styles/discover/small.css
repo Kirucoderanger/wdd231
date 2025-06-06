@@ -37,7 +37,7 @@
       border: 1px solid #ccc;
       padding: 1rem;
       border-radius: 8px;
-      transition: transform 0.3s ease-in-out;
+      
       
       
       margin: 0.5rem;
@@ -59,6 +59,7 @@
     }
      .card img {
       grid-area: picture ;
+      transition: transform 0.3s ease-in-out;
     }
     .card p {
       margin-bottom: 0rem;
@@ -71,13 +72,12 @@
     .card button {
       grid-area: button ;
     }
-    .card:hover {
-      transform: var(--hover-effect);
-    }
+    
     figure img {
       width: 100%;
       height: auto;
       border-radius: 4px;
+      
     }
     button {
       margin-top: 0rem;

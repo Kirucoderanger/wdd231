@@ -7,6 +7,9 @@
           "picture address"
           "picture button";
     }
+    .card img:hover {
+      transform: var(--hover-effect);
+    }
       
       
     }
