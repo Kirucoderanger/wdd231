@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date math</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	place-items: center;
+	justify-content: center;
+	font-family: Roboto, sans-serif;
+}
+
+main {
+	margin: 0;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+	width: 760px;
+	background-color: rgba(225, 225, 255, 0.2);
+}
+
+p {
+	margin: 1rem;
+	display: flex;
+}
+
+.label {
+	display: block;
+	width: 175px;
+	font-weight: 700;
+	color: navy;
+	text-align: right;
+	margin-right: 10px;
+}
+
+.smaller {
+	font-size: smaller;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Welcome to Date Math</h1>
+    <p>This is a standard HTML template.</p>
+
+    <main>
+	<h1>📅 Date Math (Days Between Dates)</h1>
+	<p>See the ⚙️<a href="https://codepen.io/blazzard-jason/pen/ExeBjab" target="_blank" rel="noopener">Date.now() TimeStamp</a> &nbsp; pen for Date.now() information.</p>
+	<hr>
+	<p><span class="label">Date.now(): </span> <span id="today"></span> &nbsp;<span class="smaller">(milliseconds)</span></p>
+	<p><span class="label">Next Christmas: </span> <span id="christmas"></span> &nbsp; <span class="smaller">(milliseconds)</span></p>
+	<p><span class="label">🎄Christmas - Date: </span> <span id="christmasDate"></span></p>
+	<hr>
+	<p><span class="label">Days until Christmas: </span> <span id="daysleft"></span></p>
+
+</main>
+</body>
+<script>
+    // milliseconds to days constant = 1000 ms/s * 60 s/m * 60 m/h * 24 h/day
+const msToDays = 86400000;
+// today's date
+const theDateToday = new Date();
+
+// initialize display elements
+const todayElement = document.querySelector("#today");
+const christmasElement = document.querySelector("#christmas");
+const christmasDateElement = document.querySelector("#christmasDate");
+const daysElement = document.querySelector("#daysleft");
+
+// processing
+const today = Date.now();
+const christmasDate = new Date(Date.UTC(theDateToday.getFullYear(), 11, 25));
+// check if is the waing days of December, if so ... change to next year.
+if (theDateToday.getMonth() == 11 && theDateToday.getDate() > 25) {
+	christmasDate.setFullYear(christmasDate.getFullYear() + 1);
+}
+// find difference between epoch times in ms and convert to days
+let daysleft = (christmasDate.getTime() - Date.now()) / msToDays;
+
+todayElement.textContent = today;
+christmasElement.textContent = christmasDate.getTime();
+christmasDateElement.textContent = christmasDate;
+daysElement.textContent = `${daysleft.toFixed(0)} days`;
+
+</script>
+</html>

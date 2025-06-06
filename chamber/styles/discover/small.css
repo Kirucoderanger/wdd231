@@ -46,6 +46,10 @@
       padding: 1rem;
       border-radius: 8px;
       transition: transform 0.3s ease-in-out;
+      
+      
+      margin: 0.5rem;
+      
       display: grid;
       gap: .5rem;
       
@@ -58,6 +62,7 @@
     }
     .card h2 {
       grid-area: name;
+      margin-top: 0rem;
       margin-bottom: 0rem;
     }
      .card img {
@@ -83,9 +88,9 @@
       border-radius: 4px;
     }
     button {
-      margin-top: 0.5rem;
+      margin-top: 0rem;
       padding: 0.5rem 1rem;
-      background: #007acc;
+      background: #033f66;
       color: white;
       border: none;
       border-radius: 4px;
