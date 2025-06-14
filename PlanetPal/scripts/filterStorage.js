@@ -57,4 +57,3 @@ export function clearFilters() {
   localStorage.removeItem('planetpalFilters');
   filterForm.reset();
 }
-document.getElementById('clearFiltersBtn').addEventListener('click', clearFilters);

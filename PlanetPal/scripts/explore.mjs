@@ -58,7 +58,14 @@ fetchExoplanets();
 
 
 const filterForm = document.getElementById('filterForm');
+const filterTree = document.getElementById('filterTree');
+/*filterTree.addEventListener('change', (e) => {
+  if (e.target.tagName === 'INPUT' && e.target.type === 'checkbox') {
+    saveFilters();
+  }
+});*/
 
+filterTree.addEventListener('change', saveFilters);
 filterForm.addEventListener('change', saveFilters);
 filterForm.addEventListener('submit', (e) => {
   e.preventDefault(); // prevent form reload
