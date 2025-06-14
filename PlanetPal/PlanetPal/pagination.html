@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Paginated Planet Cards</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    #searchBar {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+    #planetContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .planet-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: calc(20% - 12px);
+      box-sizing: border-box;
+      text-align: center;
+      background: white;
+    }
+    #pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #pagination button {
+      padding: 6px 12px;
+      margin: 0 5px;
+    }
+  </style>
+</head>
+<body>
+
+<input id="searchBar" placeholder="Search exoplanets..." />
+
+<div id="planetContainer"></div>
+
+<div id="pagination">
+  <button id="prevPage">Previous</button>
+  <span id="pageInfo"></span>
+  <button id="nextPage">Next</button>
+</div>
+
+<script>
+  // Demo data (replace with your own API/fetch)
+  const limitedResponse = Array.from({ length: 100 }, (_, i) => ({
+    pl_name: `Planet-${i + 1}`,
+    hostname: `Host-${(i % 10) + 1}`,
+    url: 'https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg'
+  }));
+
+  const cardsPerPage = 20;
+  let currentPage = 1;
+  let allPlanets = limitedResponse.slice();
+
+  const container = document.getElementById('planetContainer');
+  const pageInfo = document.getElementById('pageInfo');
+  const prevBtn = document.getElementById('prevPage');
+  const nextBtn = document.getElementById('nextPage');
+
+  const searchBar = document.getElementById('searchBar');
+  searchBar.addEventListener('input', () => {
+    const q = searchBar.value.toLowerCase();
+    allPlanets = limitedResponse.filter(p => p.pl_name.toLowerCase().includes(q) ||
+                                              p.hostname.toLowerCase().includes(q));
+    currentPage = 1;
+    showPage();
+  });
+
+  function paginate(arr, page, perPage) {
+    const start = (page - 1) * perPage;
+    return arr.slice(start, start + perPage);
+  }
+
+  function updatePaginationButtons() {
+    const totalPages = Math.ceil(allPlanets.length / cardsPerPage);
+    pageInfo.textContent = `Page ${currentPage} of ${totalPages || 1}`;
+    prevBtn.disabled = currentPage === 1;
+    nextBtn.disabled = currentPage >= totalPages;
+  }
+
+  function renderCards(planets) {
+    container.innerHTML = '';
+    planets.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'planet-card';
+      card.innerHTML = `
+        <h4>${p.pl_name}</h4>
+        <p>${p.hostname}</p>
+        <img src="${p.url}" alt="" style="width:100%; height:auto">
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function showPage() {
+    const pageData = paginate(allPlanets, currentPage, cardsPerPage);
+    renderCards(pageData);
+    updatePaginationButtons();
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      showPage();
+    }
+  });
+  nextBtn.addEventListener('click', () => {
+    const totalPages = Math.ceil(allPlanets.length / cardsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      showPage();
+    }
+  });
+
+  // Initial display
+  showPage();
+</script>
+
+</body>
+</html>

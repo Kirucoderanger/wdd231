@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Detection Method Tooltip</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      background: #0c0c0c;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    .learn-btn {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      padding: 0.6em 1.2em;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 6px;
+    }
+
+    .method-list {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      display: none;
+      width: 300px;
+      z-index: 10;
+    }
+
+    .method-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 4px;
+      position: relative;
+      border-bottom: 1px solid #333;
+      cursor: default;
+    }
+
+    .method-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-icon {
+      cursor: pointer;
+      margin-left: 8px;
+      font-size: 1rem;
+      color: #ccc;
+      user-select: none;
+    }
+
+    .tooltip {
+      position: fixed;
+      background: #333;
+      color: #fff;
+      padding: 12px;
+      border-radius: 6px;
+      width: 320px;
+      display: none;
+      z-index: 999;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .tooltip.visible {
+      display: block;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+
+    /* Top arrow */
+    .tooltip.top::before {
+      left: -12px;
+      top: 10px;
+      border-width: 6px 6px 6px 0;
+      border-color: transparent #333 transparent transparent;
+    }
+
+    /* Bottom arrow */
+    .tooltip.bottom::before {
+      left: -12px;
+      bottom: 10px;
+      border-width: 6px 6px 6px 0;
+      border-color: transparent #333 transparent transparent;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="learn-btn">Learn More About Detection Methods</button>
+    <div class="method-list" id="methodList"></div>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <script>
+    const discoveryMethods = [
+      {
+        name: "Transit",
+        description: "Detects brightness dips as planets pass in front of their stars.\n\nThis method is highly effective and allows astronomers to estimate planet size and orbit.\n\nIt's used by missions like Kepler and TESS."
+      },
+      { name: "Radial Velocity", description: "Finds wobbles in star movement caused by gravitational pull of orbiting planets." },
+      { name: "Imaging", description: "Takes direct images of exoplanets using advanced optics." },
+      { name: "Microlensing", description: "Uses light bending from gravity to detect planets far from Earth." },
+      { name: "Astrometry", description: "Measures subtle changes in a star's position over time." },
+      { name: "Pulsar Timing", description: "Analyzes pulses from neutron stars for disruptions caused by orbiting planets." },
+      { name: "Transit Timing Variations", description: "Finds timing irregularities caused by multiple planets in a system." },
+      { name: "Direct Detection", description: "Attempts to block starlight and view planet light directly." },
+      { name: "Occultation", description: "Detects when a planet passes behind its star." },
+      { name: "Orbital Brightness Modulation", description: "Finds slight brightness changes as planets orbit." },
+      { name: "Gravitational Microlensing", description: "Light from a background star is bent and magnified by a foreground star system." }
+    ];
+
+    const learnBtn = document.querySelector(".learn-btn");
+    const methodList = document.getElementById("methodList");
+    const tooltip = document.getElementById("tooltip");
+
+    let activeIndex = -1;
+
+    function populateList() {
+      methodList.innerHTML = "";
+      discoveryMethods.forEach((method, index) => {
+        const item = document.createElement("div");
+        item.className = "method-item";
+
+        const label = document.createElement("span");
+        label.textContent = method.name;
+
+        const icon = document.createElement("span");
+        icon.innerHTML = "ℹ️";
+        icon.className = "info-icon";
+
+        // Desktop hover
+        icon.addEventListener("mouseenter", (e) => {
+          if (window.innerWidth > 768) {
+            showTooltip(e, method.description, index);
+          }
+        });
+
+        icon.addEventListener("mouseleave", () => {
+          if (window.innerWidth > 768) {
+            hideTooltip();
+          }
+        });
+
+        // Mobile touch
+        icon.addEventListener("click", (e) => {
+          if (window.innerWidth <= 768) {
+            e.stopPropagation();
+            if (activeIndex === index) {
+              hideTooltip();
+              activeIndex = -1;
+            } else {
+              showTooltip(e, method.description, index);
+              activeIndex = index;
+            }
+          }
+        });
+
+        item.appendChild(label);
+        item.appendChild(icon);
+        methodList.appendChild(item);
+      });
+
+      // Global hide on outside tap
+      document.body.addEventListener("click", () => {
+        hideTooltip();
+        activeIndex = -1;
+      });
+    }
+
+    function showTooltip(event, text, index) {
+      tooltip.innerHTML = text.replace(/\n/g, "<br><br>");
+      tooltip.classList.add("visible");
+
+      const item = event.target.closest(".method-item");
+      const itemRect = item.getBoundingClientRect();
+
+      const top = itemRect.top + window.scrollY;
+      const left = itemRect.right + 10;
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+
+      tooltip.classList.remove("top", "bottom");
+      if (index === 0) {
+        tooltip.classList.add("top");
+      } else if (index === discoveryMethods.length - 1) {
+        tooltip.classList.add("bottom");
+      } else {
+        tooltip.classList.add("top");
+      }
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove("visible");
+    }
+
+    learnBtn.addEventListener("click", () => {
+      const isVisible = methodList.style.display === "block";
+      methodList.style.display = isVisible ? "none" : "block";
+      if (!isVisible) {
+        populateList();
+      } else {
+        hideTooltip();
+      }
+    });
+
+    window.addEventListener("scroll", () => {
+      if (tooltip.classList.contains("visible")) {
+        // Force fixed tooltip to stay aligned
+        const index = activeIndex;
+        if (index !== -1) {
+          const item = document.querySelectorAll(".method-item")[index];
+          const itemRect = item.getBoundingClientRect();
+          tooltip.style.top = `${itemRect.top + window.scrollY}px`;
+          tooltip.style.left = `${itemRect.right + 10}px`;
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

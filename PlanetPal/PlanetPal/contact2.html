@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact PlanetPal</title>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("6rSe8vlqIFjU2-NyK"); // Replace with your EmailJS public key
+    })();
+  </script>
+  <style>
+
+    
+  
+  @media (min-width: 600px) {
+    body {
+      padding: 2rem;
+    }
+  }
+
+    body {
+         padding: 1rem;
+    font-size: 16px;
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #4FC3F7;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea, select {
+      padding: 0.8rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+    }
+    button {
+      padding: 0.8rem;
+      background: #4FC3F7;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #039BE5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contact PlanetPal</h1>
+  <p>We’d love to hear your thoughts, questions, or partnership ideas!</p>
+
+  <form id="contactForm">
+    <label>
+      Your Email:
+      <input type="email" name="email" required pattern="[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+" />
+    </label>
+
+    <label>
+      WhatsApp Number:
+      <input type="tel" name="whatsapp" placeholder="+251900000000" required pattern="^\+?\d{10,15}$" />
+    </label>
+
+    <label>
+      Your Feedback:
+      <select name="feedback" required>
+        <option value="">-- Select One --</option>
+        <option value="love_it">I love it!</option>
+        <option value="great_but_needs_work">Great, but needs work</option>
+        <option value="confusing">A bit confusing</option>
+        <option value="other">Other</option>
+      </select>
+    </label>
+
+    <label>
+      Why do you want to meet or contact us?
+      <textarea name="message" rows="5" required></textarea>
+    </label>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <script>
+    /*document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const form = e.target;
+      if (!form.reportValidity()) return;
+
+      const formData = new FormData(form);
+
+      const data = {
+        email: formData.get("email"),
+        whatsapp: formData.get("whatsapp"),
+        feedback: formData.get("feedback"),
+        message: formData.get("message"),
+      };
+
+      emailjs.send("service_planetPal", "template_zpq3b2a", data)
+        .then(() => {
+          const params = new URLSearchParams(data).toString();
+          window.location.href = `contact-response1.html?${params}`;
+        })
+        .catch(error => {
+          alert("Message failed to send. Please try again.");
+          console.error(error);
+        });
+    });*/
+
+
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    if (!form.reportValidity()) return;
+
+    const formData = new FormData(form);
+    const data = {
+      email: formData.get("email"),
+      whatsapp: formData.get("whatsapp"),
+      feedback: formData.get("feedback"),
+      message: formData.get("message"),
+    };
+
+    // Step 1: Send to you
+    emailjs.send("service_jrmoldi", "template_zpq3b2a", data)
+      .then(() => {
+        // Step 2: Send confirmation to user
+        emailjs.send("service_planetPal", "template_5bb16mj", {
+          user_email: data.email,
+          user_name: data.email.split("@")[0], // or add a field for name
+          message_summary: data.message
+        });
+      })
+      .finally(() => {
+        const params = new URLSearchParams(data).toString();
+        window.location.href = `contact-response1.html?${params}`;
+      })
+      .catch(error => {
+        alert("Sending failed. Please try again.");
+        console.error(error);
+      });
+  });
+  </script>
+</body>
+</html>

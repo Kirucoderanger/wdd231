@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Detail Toggle Dropdown</title>
+  <style>
+    body {
+      background: #1e1e2a;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 50px;
+    }
+
+    .image-card {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 3;
+      transition: background 0.3s;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(20, 20, 30, 0.92);
+      color: #fff;
+      transition: max-height 0.5s ease, padding 0.3s ease;
+      z-index: 2;
+      padding: 0 16px;
+    }
+
+    .dropdown.open {
+      max-height: 300px;
+      padding: 16px;
+    }
+
+    .dropdown ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dropdown li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div class="image-card">
+  <img src="https://picsum.photos/320/220?random=7" alt="Planet">
+  <button class="toggle-btn" id="toggleBtn">Detail</button>
+  <div class="dropdown" id="dropdown">
+    <ul id="detailList"></ul>
+  </div>
+</div>
+
+<script>
+  const details = [
+    "Name: Saturn",
+    "Type: Gas Giant",
+    "Moons: 83 confirmed",
+    "Interesting Fact: Has spectacular rings made of ice and rock."
+  ];
+
+  const dropdown = document.getElementById("dropdown");
+  const detailList = document.getElementById("detailList");
+  const toggleBtn = document.getElementById("toggleBtn");
+
+  let isOpen = false;
+
+  toggleBtn.addEventListener("click", () => {
+    isOpen = !isOpen;
+
+    if (isOpen) {
+      if (!detailList.hasChildNodes()) {
+        details.forEach(item => {
+          const li = document.createElement("li");
+          li.textContent = item;
+          detailList.appendChild(li);
+        });
+      }
+
+      dropdown.classList.add("open");
+      toggleBtn.textContent = "✕";
+    } else {
+      dropdown.classList.remove("open");
+      toggleBtn.textContent = "Detail";
+    }
+  });
+</script>
+
+</body>
+</html>

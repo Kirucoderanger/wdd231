@@ -103,7 +103,9 @@ function renderPlanetCard(name, kname, year, mass, radius, planet) {
     //<p>Radius (Jupiter): ${radius}</p>
 
     card.addEventListener('mouseenter', (e) => {
-      const url = "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg";
+      //const url = "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg";
+      const img = card.querySelector('img');
+      const url = img.src;
       clearTimeout(hideTimeout);
       showTooltip(e, kname, name, url, card);
     });
@@ -144,7 +146,7 @@ tooltip.addEventListener('mouseenter', () => {
     tooltip.classList.remove('top', 'left', 'right','bottom');
     
 
-    let top = rect.top - tooltipHeight - 16;
+   let top = rect.top - tooltipHeight - 16;
     let left = rect.left + rect.width / 2 - tooltipWidth / 2;
     let position = 'top';
 
@@ -168,7 +170,102 @@ tooltip.addEventListener('mouseenter', () => {
     tooltip.classList.add(position);
     tooltip.style.top = `${top + window.scrollY}px`;
     tooltip.style.left = `${left + window.scrollX}px`;
+    //tooltip.style.opacity = '1';
+
+
+    /*let top, left, position;
+const padding = 10;
+
+// Default to top
+top = rect.top - tooltipHeight - padding;
+left = rect.left + rect.width / 2 - tooltipWidth / 2;
+position = 'top';
+
+// Check if there's not enough space above
+if (top < window.scrollY) {
+  // Try bottom
+  if (rect.bottom + tooltipHeight + padding < window.innerHeight + window.scrollY) {
+    position = 'bottom';
+    top = rect.bottom + padding;
+    left = rect.left + rect.width / 2 - tooltipWidth / 2;
   }
+  // Try right
+  else if (rect.right + tooltipWidth + padding < window.innerWidth + window.scrollX) {
+    position = 'right';
+    top = rect.top + rect.height / 2 - tooltipHeight / 2;
+    left = rect.right + padding;
+  }
+  // Fallback to left
+  else {
+    position = 'left';
+    top = rect.top + rect.height / 2 - tooltipHeight / 2;
+    left = rect.left - tooltipWidth - padding;
+  }
+}
+
+// Ensure tooltip doesn't overflow horizontally
+if (left < window.scrollX) left = window.scrollX + padding;
+if (left + tooltipWidth > window.innerWidth + window.scrollX) {
+  left = window.innerWidth + window.scrollX - tooltipWidth - padding;
+}
+
+// Ensure tooltip doesn't overflow vertically
+if (top < window.scrollY) top = window.scrollY + padding;
+if (top + tooltipHeight > window.innerHeight + window.scrollY) {
+  top = window.innerHeight + window.scrollY - tooltipHeight - padding;
+}
+
+// Apply position and coordinates
+tooltip.classList.add(position);
+tooltip.style.top = `${top}px`;
+tooltip.style.left = `${left}px`;
+tooltip.style.opacity = '1';*/
+
+/*
+let top, left, position;
+const padding = 10;
+
+top = rect.top - tooltipHeight - padding;
+left = rect.left + rect.width / 2 - tooltipWidth / 2;
+position = 'top';
+
+if (top < window.scrollY) {
+  if (rect.bottom + tooltipHeight + padding < window.innerHeight + window.scrollY) {
+    position = 'bottom';
+    top = rect.bottom + padding;
+    left = rect.left + rect.width / 2 - tooltipWidth / 2;
+  } else if (rect.right + tooltipWidth + padding < window.innerWidth + window.scrollX) {
+    position = 'right';
+    top = rect.top + rect.height / 2 - tooltipHeight / 2;
+    left = rect.right + padding;
+  } else {
+    position = 'left';
+    top = rect.top + rect.height / 2 - tooltipHeight / 2;
+    left = rect.left - tooltipWidth - padding;
+  }
+}
+
+if (left < window.scrollX) left = window.scrollX + padding;
+if (left + tooltipWidth > window.innerWidth + window.scrollX) {
+  left = window.innerWidth + window.scrollX - tooltipWidth - padding;
+}
+if (top < window.scrollY) top = window.scrollY + padding;
+if (top + tooltipHeight > window.innerHeight + window.scrollY) {
+  top = window.innerHeight + window.scrollY - tooltipHeight - padding;
+}
+
+tooltip.className = `tooltip ${position}`;
+tooltip.style.top = `${top}px`;
+tooltip.style.left = `${left}px`;
+tooltip.style.opacity = '1';*/
+
+    
+  }
+
+  //tooltip.classList.add('show');
+  //tooltip.classList.remove('show');
+
+
 
 
   /* 

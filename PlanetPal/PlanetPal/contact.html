@@ -1,1 +1,114 @@
-<!DOCTYPE html><html><body><h1>Contact Page</h1><p>Contact form and info coming soon.</p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact PlanetPal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #4FC3F7;
+    }
+
+    .container {
+      background: #1c1c1c;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      
+    }
+    input, textarea {
+      padding: 0.8rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 370px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    select {
+      padding: 0.8rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+   
+    button {
+      padding: 0.8rem;
+      background: #4FC3F7;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #039BE5;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+  <h1>Contact PlanetPal</h1>
+  <p>We'd love to hear your thoughts, questions, or partnership ideas. Reach out anytime!</p>
+
+  <form id="contactForm">
+    <label>
+      Your Email:
+      <input type="email" name="email" required>
+    </label>
+    
+    <label>
+      WhatsApp Number:
+      <input type="tel" name="whatsapp" placeholder="+251900000000" required>
+    </label>
+
+    <label>
+      Your Feedback:
+      <select name="feedback" required>
+        <option value="">-- Select One --</option>
+        <option value="love_it">I love it!</option>
+        <option value="great_but_needs_work">Great, but needs work</option>
+        <option value="confusing">A bit confusing</option>
+        <option value="other">Other</option>
+      </select>
+    </label>
+
+    <label>
+      Why do you want to meet or contact us?
+      <textarea name="message" rows="5" required></textarea>
+    </label>
+
+    <button type="submit">Send Message</button>
+  </form>
+    </div>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const params = new URLSearchParams(formData).toString();
+      window.location.href = `contact-response1.html?${params}`;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Detection Method Tooltip</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #0c0c0c;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      position: relative;
+    }
+
+    .learn-btn {
+      background: #1e88e5;
+      color: white;
+      border: none;
+      padding: 0.6em 1.2em;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 6px;
+    }
+
+    .method-list {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      display: none;
+      width: 300px;
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .method-list.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .method-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 4px;
+      position: relative;
+      border-bottom: 1px solid #333;
+    }
+
+    .method-item:last-child {
+      border-bottom: none;
+    }
+
+    .info-icon {
+      cursor: pointer;
+      margin-left: 8px;
+      font-size: 1rem;
+      color: #ccc;
+    }
+
+    .tooltip {
+      position: absolute;
+      background: #333;
+      color: #fff;
+      padding: 12px;
+      border-radius: 6px;
+      width: 340px;
+      display: none;
+      z-index: 999;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .tooltip.visible {
+      display: block;
+      opacity: 1;
+    }
+
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 6px 6px 0;
+      border-color: transparent #333 transparent transparent;
+      transition: top 0.2s ease;
+    }
+
+    .tooltip .actions {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tooltip .actions button {
+      padding: 4px 10px;
+      font-size: 0.9rem;
+      border: none;
+      background: #1e88e5;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .tooltip .actions a {
+      color: #90caf9;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="learn-btn">Learn More About Detection Methods</button>
+    <div class="method-list" id="methodList"></div>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+
+  <script>
+    const discoveryMethods = [
+      {
+        name: "Transit",
+        description: "Detects brightness dips as planets pass in front of their stars.\n\nThis method is highly effective and allows astronomers to estimate planet size and orbit.\n\nIt's used by missions like Kepler and TESS.",
+        link: "https://exoplanets.nasa.gov"
+      },
+      { name: "Radial Velocity", description: "Finds wobbles in star movement caused by gravitational pull of orbiting planets." },
+      { name: "Imaging", description: "Takes direct images of exoplanets using advanced optics.", link: "https://en.wikipedia.org/wiki/Direct_imaging" },
+      { name: "Microlensing", description: "Uses light bending from gravity to detect planets far from Earth." },
+      { name: "Astrometry", description: "Measures subtle changes in a star's position over time." },
+      { name: "Pulsar Timing", description: "Analyzes pulses from neutron stars for disruptions caused by orbiting planets." },
+      { name: "Transit Timing Variations", description: "Finds timing irregularities caused by multiple planets in a system." },
+      { name: "Direct Detection", description: "Attempts to block starlight and view planet light directly." },
+      { name: "Occultation", description: "Detects when a planet passes behind its star." },
+      { name: "Orbital Brightness Modulation", description: "Finds slight brightness changes as planets orbit." },
+      { name: "Gravitational Microlensing", description: "Light from a background star is bent and magnified by a foreground star system." }
+    ];
+
+    const learnBtn = document.querySelector(".learn-btn");
+    const methodList = document.getElementById("methodList");
+    const tooltip = document.getElementById("tooltip");
+
+    let activeIndex = -1;
+    let hideTimeout;
+
+    function populateList() {
+      methodList.innerHTML = "";
+      discoveryMethods.forEach((method, index) => {
+        const item = document.createElement("div");
+        item.className = "method-item";
+
+        const label = document.createElement("span");
+        label.textContent = method.name;
+
+        const icon = document.createElement("span");
+        icon.innerHTML = "ℹ️";
+        icon.className = "info-icon";
+
+        icon.addEventListener("mouseenter", (e) => {
+          clearTimeout(hideTimeout);
+          if (window.innerWidth > 768) showTooltip(e, method, index);
+        });
+
+        icon.addEventListener("mouseleave", () => {
+          if (window.innerWidth > 768) delayedHideTooltip();
+        });
+
+        icon.addEventListener("click", (e) => {
+          e.stopPropagation();
+          if (window.innerWidth <= 768) {
+            if (activeIndex === index) {
+              hideTooltip();
+              activeIndex = -1;
+            } else {
+              showTooltip(e, method, index);
+              activeIndex = index;
+            }
+          }
+        });
+
+        item.appendChild(label);
+        item.appendChild(icon);
+        methodList.appendChild(item);
+      });
+
+      document.body.addEventListener("click", () => {
+        hideTooltip();
+        activeIndex = -1;
+      });
+    }
+
+    function showTooltip(event, method, index) {
+      const formatted = method.description.replace(/\n/g, "<br><br>");
+      tooltip.innerHTML = `
+        <div class="text">${formatted}</div>
+        <div class="actions">
+          <button onclick="copyText(\`${method.description.replace(/`/g, "\\`")}\`)">Copy</button>
+          ${method.link ? `<a href="${method.link}" target="_blank">Learn more ↗</a>` : ''}
+        </div>
+      `;
+      tooltip.classList.add("visible");
+
+      const item = event.target.closest(".method-item");
+      const itemRect = item.getBoundingClientRect();
+      const listRect = methodList.getBoundingClientRect();
+
+      const pointerOffset = itemRect.top - listRect.top + itemRect.height / 2;
+
+      // Align tooltip vertically with method list
+      const tooltipTop = listRect.top + window.scrollY;
+      tooltip.style.top = `${tooltipTop}px`;
+      tooltip.style.left = `${listRect.right + 10}px`;
+      tooltip.style.height = `${listRect.height}px`;
+
+      const arrow = tooltip.querySelector("::before");
+      tooltip.style.setProperty("--pointer-top", `${pointerOffset}px`);
+      tooltip.querySelector("::before");
+
+      tooltip.style.setProperty("--pointer-top", `${pointerOffset}px`);
+      tooltip.style.setProperty("--list-top", `${tooltipTop}px`);
+      tooltip.style.setProperty("--list-height", `${listRect.height}px`);
+
+      // Reposition the arrow
+      tooltip.style.setProperty("--arrow-top", `${pointerOffset}px`);
+      tooltip.querySelector("::before").style.top = `${pointerOffset - 6}px`;
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove("visible");
+    }
+
+    function delayedHideTooltip() {
+      hideTimeout = setTimeout(() => {
+        hideTooltip();
+      }, 600);
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Description copied to clipboard!");
+      });
+    }
+
+    learnBtn.addEventListener("click", () => {
+      const isShowing = methodList.classList.contains("show");
+      methodList.classList.toggle("show", !isShowing);
+      methodList.style.display = "block";
+      if (!isShowing) {
+        populateList();
+      } else {
+        hideTooltip();
+      }
+    });
+  </script>
+
+</body>
+</html>

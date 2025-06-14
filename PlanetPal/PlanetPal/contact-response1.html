@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You – PlanetPal</title>
+  <style>
+
+    
+  input, textarea, select, button {
+    font-size: 1rem;
+  }
+  @media (min-width: 600px) {
+    body {
+      padding: 2rem;
+    }
+  }
+    body {
+        padding: 1rem;
+    font-size: 16px;
+      font-family: Arial, sans-serif;
+      background: #0d1b2a;
+      color: white;
+      
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    .response {
+      background: #2c2c2c;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    .btn-group {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .btn-group a {
+      padding: 0.7rem 1.5rem;
+      background: #4FC3F7;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn-group a:hover {
+      background: #0288D1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Thanks for Reaching Out!</h1>
+  <p>Here’s a summary of your message:</p>
+  <div class="response" id="responseContainer"></div>
+
+  <div class="btn-group">
+    <a href="index.html">Back to Home</a>
+    <a href="explore.html">Continue Exploring</a>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const responseDiv = document.getElementById("responseContainer");
+
+    const email = params.get("email");
+    const whatsapp = params.get("whatsapp");
+    const feedback = params.get("feedback");
+    const message = params.get("message");
+
+    responseDiv.innerHTML = `
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>WhatsApp:</strong> ${whatsapp}</p>
+      <p><strong>Feedback:</strong> ${feedback.replace(/_/g, " ")}</p>
+      <p><strong>Message:</strong><br>${message}</p>
+    `;
+  </script>
+</body>
+</html>

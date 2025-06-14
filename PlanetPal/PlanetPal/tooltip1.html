@@ -1,0 +1,25 @@
+<!-- HTML -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Image Tooltip Example</title>
+</head>
+<body>
+<div class="card">
+  <img src="https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg" alt="Preview" />
+  <img src="https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg" alt="Preview" />
+</div>
+
+<!-- Link & Script -->
+<link rel="stylesheet" href="tooltip.css" />
+<script src="tooltip.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    new FancyImageTooltip('.card img', 'right'); // Options: 'right', 'left', 'top', 'bottom'
+  });
+</script>
+ 
+</body>
+</html>

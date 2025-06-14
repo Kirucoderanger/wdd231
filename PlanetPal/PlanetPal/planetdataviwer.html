@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Planet Viewer</title>
+  <style>
+    body { font-family: sans-serif; background: #111; color: #fff; padding: 20px; }
+    .planet-card {
+      border: 1px solid #555;
+      padding: 10px;
+      margin: 5px;
+      background: #222;
+      display: inline-block;
+      width: 200px;
+    }
+    #planetContainer {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    form label {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Exoplanet Data Viewer</h1>
+<form id="filterForm">
+  <fieldset>
+    <legend>Filter by:</legend>
+    <label><input type="checkbox" name="hostname" value="Kepler"> Kepler</label>
+    <label><input type="checkbox" name="hostname" value="HD"> HD</label>
+    <label><input type="checkbox" name="discoverymethod" value="Transit"> Transit</label>
+    <label><input type="checkbox" name="disc_year" value="2016"> 2016</label>
+  </fieldset>
+  <fieldset>
+    <legend>Retrieval Mode:</legend>
+    <label><input type="radio" name="mode" value="sequential" checked> Sequential</label>
+    <label><input type="radio" name="mode" value="random"> Random</label>
+  </fieldset>
+  <button type="submit">Apply Filters</button>
+</form>
+
+<div id="planetContainer"></div>
+<button id="prevBtn">Previous</button>
+<button id="nextBtn">Next</button>
+<p id="pageInfo"></p>
+
+<script>
+  const uniquePlanets = Array.from({ length: 5000 }, (_, i) => ({
+    pl_name: `Planet-${i + 1}`,
+    hostname: i % 2 === 0 ? "Kepler" : "HD",
+    discoverymethod: i % 3 === 0 ? "Transit" : "Imaging",
+    disc_year: 2015 + (i % 10)
+  }));
+
+  let filteredPlanets = [];
+  let chunkSize = 100;
+  let currentChunk = 0;
+  let totalChunks = 0;
+  let currentMode = 'sequential';
+
+  const planetContainer = document.getElementById("planetContainer");
+
+  function shuffleArray(arr) {
+    const array = [...arr];
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function renderPlanets(planets) {
+    planetContainer.innerHTML = "";
+    planets.forEach(planet => {
+      const card = document.createElement("div");
+      card.className = "planet-card";
+      card.innerHTML = `<h4>${planet.pl_name}</h4><p>${planet.hostname}</p><p>${planet.discoverymethod} - ${planet.disc_year}</p>`;
+      planetContainer.appendChild(card);
+    });
+    document.getElementById("pageInfo").textContent = `Page ${currentChunk + 1} of ${totalChunks}`;
+  }
+
+  function getChunk(data, index) {
+    const start = index * chunkSize;
+    return data.slice(start, start + chunkSize);
+  }
+
+  function updateView() {
+    let data = [...filteredPlanets];
+    if (currentMode === 'random') data = shuffleArray(data);
+    const chunk = getChunk(data, currentChunk);
+    renderPlanets(chunk);
+  }
+
+  document.getElementById("filterForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const selectedHostnames = formData.getAll("hostname");
+    const selectedMethods = formData.getAll("discoverymethod");
+    const selectedYears = formData.getAll("disc_year").map(Number);
+    currentMode = formData.get("mode");
+
+    filteredPlanets = uniquePlanets.filter(p => {
+      const matchHostname = selectedHostnames.length ? selectedHostnames.includes(p.hostname) : true;
+      const matchMethod = selectedMethods.length ? selectedMethods.includes(p.discoverymethod) : true;
+      const matchYear = selectedYears.length ? selectedYears.includes(p.disc_year) : true;
+      return matchHostname && matchMethod && matchYear;
+    });
+
+    currentChunk = 0;
+    totalChunks = Math.ceil(filteredPlanets.length / chunkSize);
+    updateView();
+  });
+
+  document.getElementById("nextBtn").addEventListener("click", () => {
+    if (currentChunk < totalChunks - 1) {
+      currentChunk++;
+      updateView();
+    }
+  });
+
+  document.getElementById("prevBtn").addEventListener("click", () => {
+    if (currentChunk > 0) {
+      currentChunk--;
+      updateView();
+    }
+  });
+</script>
+
+</body>
+</html>

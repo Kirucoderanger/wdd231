@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .planet-card {
+      border: 1px solid #ccc;
+      margin: 5px;
+      padding: 10px;
+      display: inline-block;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="planetContainer"></div>
+<button id="nextBtn">Next 100</button>
+<button id="previousBtn">previous 100</button>
+<p id="pageInfo"></p>
+
+<script>
+  // Step 1: Generate or fetch a large unique dataset
+  const uniquePlanets = Array.from({ length: 5000 }, (_, i) => ({
+    pl_name: `Planet-${i + 1}`,
+    hostname: `Host-${Math.floor(Math.random() * 100)}`
+  }));
+
+  // Step 2: Shuffle the array once
+  function shuffleArray(arr) {
+    const array = [...arr];
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  const shuffledPlanets = shuffleArray(uniquePlanets);
+  const chunkSize = 100;
+  const totalChunks = Math.ceil(shuffledPlanets.length / chunkSize);
+  let currentChunk = 0;
+
+  function getChunk(data, index, size) {
+    const start = index * size;
+    return data.slice(start, start + size);
+  }
+
+  function renderPlanets(planets) {
+    const container = document.getElementById("planetContainer");
+    container.innerHTML = "";
+    planets.forEach(planet => {
+      const card = document.createElement("div");
+      card.className = "planet-card";
+      card.innerHTML = `<h4>${planet.pl_name}</h4><p>${planet.hostname}</p>`;
+      container.appendChild(card);
+    });
+    document.getElementById("pageInfo").textContent = `Set ${currentChunk + 1} of ${totalChunks}`;
+  }
+
+  function nextPage() {
+    if (currentChunk < totalChunks) {
+      const nextSet = getChunk(shuffledPlanets, currentChunk, chunkSize);
+      renderPlanets(nextSet);
+      currentChunk++;
+    } else {
+      alert("All planets shown.");
+    }
+  }
+
+  function previousPage() {
+    if (currentChunk > 0) {
+      const previousSet = getChunk(shuffledPlanets, currentChunk - 1 , chunkSize);
+      renderPlanets(previousSet);
+      currentChunk--;
+    } else {
+      alert("All planets shown.");
+    }
+  }
+
+  document.getElementById("nextBtn").addEventListener("click", nextPage);
+  document.getElementById("previousBtn").addEventListener("click", previousPage);
+
+  // Initial load
+  nextPage();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<script>
+    /*
+    // === CONFIGURATION & STATE ===
+const itemsPerPage = 100;
+let currentPage = 0;
+let currentMode = 'sequential'; // or 'random'
+let filteredPlanets = [];
+let uniquePlanets = []; // your master dataset (e.g. 5000 items)
+let alreadySeenIndices = new Set();
+
+// === UI ELEMENT REFERENCES ===
+const filterForm = document.getElementById('filterForm');
+const modeRadios = document.getElementsByName('mode');
+const nextBtn = document.getElementById('nextBtn');
+const prevBtn = document.getElementById('prevBtn');
+
+// === UTILITIES ===
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function getFilteredPlanets() {
+  const hostname = document.getElementById('hostnameFilter').value.toLowerCase();
+  const method = document.getElementById('methodFilter').value.toLowerCase();
+  const year = document.getElementById('yearFilter').value.toLowerCase();
+
+  return uniquePlanets.filter(p => {
+    const hostMatch = hostname ? p.hostname.toLowerCase().includes(hostname) : true;
+    const methodMatch = method ? p.discoverymethod.toLowerCase().includes(method) : true;
+    const yearMatch = year ? String(p.disc_year).includes(year) : true;
+    return hostMatch && methodMatch && yearMatch;
+  });
+}
+
+function getRandomChunk() {
+  const remaining = filteredPlanets
+    .map((p, i) => ({ p, i }))
+    .filter(({ i }) => !alreadySeenIndices.has(i));
+
+  const sample = shuffleArray(remaining).slice(0, itemsPerPage);
+  sample.forEach(({ i }) => alreadySeenIndices.add(i));
+  return sample.map(({ p }) => p);
+}
+
+function getSequentialChunk() {
+  const start = currentPage * itemsPerPage;
+  const end = start + itemsPerPage;
+  return filteredPlanets.slice(start, end);
+}
+
+// === MAIN CONTROLLER ===
+function updateDataPreview() {
+  let chunk;
+  if (currentMode === 'random') {
+    chunk = getRandomChunk();
+  } else {
+    chunk = getSequentialChunk();
+  }
+  previewPlanets(chunk); // Your custom preview function
+  updateNavButtons();
+}
+
+function updateNavButtons() {
+  prevBtn.disabled = currentPage === 0;
+  if (currentMode === 'sequential') {
+    const totalPages = Math.ceil(filteredPlanets.length / itemsPerPage);
+    nextBtn.disabled = currentPage + 1 >= totalPages;
+  } else {
+    nextBtn.disabled = alreadySeenIndices.size >= filteredPlanets.length;
+  }
+}
+
+// === EVENT HANDLERS ===
+filterForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  currentPage = 0;
+  alreadySeenIndices.clear();
+
+  currentMode = [...modeRadios].find(r => r.checked)?.value || 'sequential';
+  filteredPlanets = getFilteredPlanets();
+  updateDataPreview();
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentMode === 'sequential') {
+    currentPage++;
+  }
+  updateDataPreview();
+});
+
+prevBtn.addEventListener('click', () => {
+  if (currentPage > 0) currentPage--;
+  updateDataPreview();
+});
+
+// === INIT ===
+function loadInitialData(data) {
+  uniquePlanets = data;
+  filteredPlanets = [...uniquePlanets];
+  updateDataPreview();
+}
+loadInitialData(uniquePlanets); // Call this with your initial dataset*/
+</script>

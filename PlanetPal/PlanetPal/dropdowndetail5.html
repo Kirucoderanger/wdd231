@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fancy Tooltip Card</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #0b0c1d, #1f2b46);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      padding: 50px 20px;
+    }
+
+    .image-card {
+      position: relative;
+      width: 320px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      background: #222;
+      scroll-margin-top: 100px;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-card img:hover {
+      transform: scale(1.05);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-btn:hover {
+      background: rgba(0,0,0,0.9);
+    }
+
+    .toggle-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(20, 20, 30, 0.92);
+      color: #fff;
+      opacity: 0;
+      padding: 0 16px;
+      z-index: 2;
+      transition: max-height 0.5s ease, padding 0.3s ease, opacity 0.5s ease;
+    }
+
+    .dropdown.open {
+      max-height: 300px;
+      padding: 16px;
+      opacity: 1;
+    }
+
+    .more-btn {
+      margin-top: 10px;
+      color: #00c3ff;
+      cursor: pointer;
+      font-weight: bold;
+      -webkit-user-select: none;
+      user-select: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .more-info {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      font-size: 14px;
+      color: #ddd;
+      padding-top: 6px;
+    }
+
+    .more-info.open {
+      max-height: 100px;
+    }
+
+    @media (max-width: 400px) {
+      .image-card {
+        width: 90%;
+      }
+
+      .toggle-btn {
+        font-size: 14px;
+        padding: 5px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align: center; padding: 20px;">
+    <input 
+      type="text" 
+      id="searchBar" 
+      placeholder="Search by name, type, moons, or fact..." 
+      style="padding: 10px 15px; width: 260px; border-radius: 8px; border: none; outline: none; font-size: 16px; background: #333; color: white;"
+    />
+  </div>
+
+  <div class="card-grid" id="cardGrid"></div>
+
+  <audio id="ambience" loop autoplay>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_fbcde67e7a.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const planets = [
+      {
+        name: "Saturn",
+        type: "Gas Giant",
+        moons: "83 confirmed",
+        fact: "Has spectacular rings made of ice and rock.",
+        full: "https://picsum.photos/320/220?random=1",
+        description: "This planet has a unique ring system made of icy particles, rock debris, and dust."
+      },
+      {
+        name: "Mars",
+        type: "Terrestrial",
+        moons: "2",
+        fact: "Known as the Red Planet.",
+        full: "https://picsum.photos/320/220?random=2",
+        description: "Mars has the tallest volcano in the solar system — Olympus Mons."
+      },
+      {
+        name: "Jupiter",
+        type: "Gas Giant",
+        moons: "79",
+        fact: "The largest planet in the solar system.",
+        full: "https://picsum.photos/320/220?random=3",
+        description: "Its Great Red Spot is a massive storm larger than Earth."
+      }
+    ];
+
+    const grid = document.getElementById("cardGrid");
+
+    function renderCards(filteredPlanets) {
+      grid.innerHTML = "";
+      filteredPlanets.forEach((planet, index) => {
+        const card = document.createElement("div");
+        card.className = "image-card";
+        card.dataset.index = index;
+
+        card.innerHTML = `
+          <img src="${planet.full}" alt="${planet.name}">
+          <button class="toggle-btn" title="Click to view details">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm0 64a48 48 0 110 96 48 48 0 010-96zm56 280c0 4.4-3.6 8-8 8h-96c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h16v-88h-16c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h64c4.4 0 8 3.6 8 8v112h16c4.4 0 8 3.6 8 8v16z"/>
+            </svg>
+            Detail
+          </button>
+          <div class="dropdown">
+            <ul>
+              <li>Name: ${planet.name}</li>
+              <li>Type: ${planet.type}</li>
+              <li>Moons: ${planet.moons}</li>
+              <li>Fact: ${planet.fact}</li>
+            </ul>
+            <div class="more-btn">More Info ▼</div>
+            <div class="more-info">
+              <p>${planet.description}</p>
+            </div>
+          </div>
+        `;
+
+        const toggleBtn = card.querySelector(".toggle-btn");
+        const dropdown = card.querySelector(".dropdown");
+        const moreBtn = card.querySelector(".more-btn");
+        const moreInfo = card.querySelector(".more-info");
+
+        let isOpen = false;
+        let isMoreOpen = false;
+
+        toggleBtn.addEventListener("click", () => {
+          isOpen = !isOpen;
+
+          if (isOpen) {
+            toggleBtn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path d="M231 256l107-107c9.4-9.4 9.4-24.6 0-33.9l-22.6-22.6c-9.4-9.4-24.6-9.4-33.9 0L174.4 199.4 67.3 92.3c-9.4-9.4-24.6-9.4-33.9 0L10.7 114.9c-9.4 9.4-9.4 24.6 0 33.9l107 107-107 107c-9.4 9.4-9.4 24.6 0 33.9l22.6 22.6c9.4 9.4 24.6 9.4 33.9 0l107-107 107 107c9.4 9.4 24.6 9.4 33.9 0l22.6-22.6c9.4-9.4 9.4-24.6 0-33.9L231 256z"/>
+              </svg>`;
+            toggleBtn.title = "Close details";
+            dropdown.classList.add("open");
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            toggleBtn.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm0 64a48 48 0 110 96 48 48 0 010-96zm56 280c0 4.4-3.6 8-8 8h-96c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h16v-88h-16c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h64c4.4 0 8 3.6 8 8v112h16c4.4 0 8 3.6 8 8v16z"/>
+              </svg>
+              Detail`;
+            toggleBtn.title = "Click to view details";
+            dropdown.classList.remove("open");
+            moreInfo.classList.remove("open");
+            moreBtn.textContent = "More Info ▼";
+            isMoreOpen = false;
+          }
+        });
+
+        moreBtn.addEventListener("click", () => {
+          isMoreOpen = !isMoreOpen;
+          moreInfo.classList.toggle("open");
+          moreBtn.textContent = isMoreOpen ? "Less Info ▲" : "More Info ▼";
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    renderCards(planets);
+
+    document.getElementById("searchBar").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const filtered = planets.filter(planet =>
+        planet.name.toLowerCase().includes(query) ||
+        planet.type.toLowerCase().includes(query) ||
+        planet.moons.toLowerCase().includes(query) ||
+        planet.fact.toLowerCase().includes(query)
+      );
+      renderCards(filtered);
+    });
+  </script>
+</body>
+</html>

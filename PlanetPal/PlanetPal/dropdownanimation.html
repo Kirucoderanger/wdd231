@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Detail Dropdown</title>
+  <style>
+    body {
+      background: #1e1e2a;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      padding: 50px;
+    }
+
+    .image-card {
+      position: relative;
+      width: 320px;
+      height: 220px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .detail-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 2;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(20, 20, 30, 0.9);
+      color: #fff;
+      transition: max-height 0.5s ease;
+      z-index: 1;
+      padding: 0 16px;
+    }
+
+    .dropdown.open {
+      max-height: 300px;
+      padding: 16px;
+    }
+
+    .dropdown ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dropdown li {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      background: none;
+      color: #fff;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="image-card">
+  <img src="https://picsum.photos/320/220?grayscale" alt="Planet">
+  <button class="detail-btn">Detail</button>
+  <div class="dropdown" id="dropdown">
+    <button class="close-btn" id="closeBtn">✕</button>
+    <ul id="detailList"></ul>
+  </div>
+</div>
+
+<script>
+  const details = [
+    "Name: Jupiter",
+    "Type: Gas Giant",
+    "Moons: 79 known",
+    "Interesting Fact: Has the biggest storm in the solar system",
+  ];
+
+  const dropdown = document.getElementById("dropdown");
+  const detailList = document.getElementById("detailList");
+  const detailBtn = document.querySelector(".detail-btn");
+  const closeBtn = document.getElementById("closeBtn");
+
+  detailBtn.addEventListener("click", () => {
+    // Populate only once if empty
+    if (!detailList.hasChildNodes()) {
+      details.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        detailList.appendChild(li);
+      });
+    }
+    dropdown.classList.add("open");
+  });
+
+  closeBtn.addEventListener("click", () => {
+    dropdown.classList.remove("open");
+  });
+</script>
+
+</body>
+</html>

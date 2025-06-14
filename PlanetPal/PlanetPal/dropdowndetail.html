@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fancy Tooltip Card</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(120deg, #0b0c1d, #1f2b46);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .image-card {
+      position: relative;
+      width: 320px;
+      margin: 100px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image-card img:hover {
+      transform: scale(1.05);
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      border: none;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 3;
+      transition: background 0.3s;
+    }
+
+    .toggle-btn:hover {
+      background: rgba(0,0,0,0.9);
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      background: rgba(20, 20, 30, 0.92);
+      color: #fff;
+      transition: max-height 0.5s ease, padding 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      z-index: 2;
+      padding: 0 16px;
+    }
+
+    .dropdown.open {
+      max-height: 300px;
+      padding: 16px;
+      opacity: 1;
+    }
+
+    .more-btn {
+      margin-top: 10px;
+      color: #00c3ff;
+      cursor: pointer;
+      font-weight: bold;
+      user-select: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .more-info {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      font-size: 14px;
+      color: #ddd;
+      padding-top: 6px;
+    }
+
+    .more-info.open {
+      max-height: 100px;
+    }
+
+    @media (max-width: 400px) {
+      .image-card {
+        width: 90%;
+      }
+
+      .toggle-btn {
+        font-size: 14px;
+        padding: 5px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="image-card">
+    <img src="https://picsum.photos/320/220?random=9" alt="Planet">
+    <button class="toggle-btn" id="toggleBtn" title="Click to view details">Detail</button>
+    <div class="dropdown" id="dropdown">
+      <ul id="detailList"></ul>
+      <div id="moreToggle" class="more-btn">More Info ▼</div>
+      <div id="moreInfo" class="more-info">
+        <p>This planet has a unique ring system made of icy particles, rock debris, and dust. It is the most visually stunning of all the gas giants.</p>
+      </div>
+    </div>
+  </div>
+
+  <audio id="ambience" loop autoplay>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_fbcde67e7a.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const details = [
+      "Name: Saturn",
+      "Type: Gas Giant",
+      "Moons: 83 confirmed",
+      "Interesting Fact: Has spectacular rings made of ice and rock."
+    ];
+
+    const dropdown = document.getElementById("dropdown");
+    const detailList = document.getElementById("detailList");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const moreToggle = document.getElementById("moreToggle");
+    const moreInfo = document.getElementById("moreInfo");
+
+    let isOpen = false;
+    let listBuilt = false;
+    let isMoreOpen = false;
+
+    toggleBtn.addEventListener("click", () => {
+      isOpen = !isOpen;
+
+      if (isOpen) {
+        toggleBtn.textContent = "✕";
+        toggleBtn.title = "Close details";
+
+        if (!listBuilt) {
+          details.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            detailList.appendChild(li);
+          });
+          listBuilt = true;
+        }
+
+        dropdown.classList.add("open");
+      } else {
+        toggleBtn.textContent = "Detail";
+        toggleBtn.title = "Click to view details";
+        dropdown.classList.remove("open");
+        moreInfo.classList.remove("open");
+        isMoreOpen = false;
+      }
+    });
+
+    moreToggle.addEventListener("click", () => {
+      isMoreOpen = !isMoreOpen;
+      moreInfo.classList.toggle("open");
+      moreToggle.textContent = isMoreOpen ? "Less Info ▲" : "More Info ▼";
+    });
+  </script>
+</body>
+</html>

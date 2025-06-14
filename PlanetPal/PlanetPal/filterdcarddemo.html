@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exoplanet Search Tooltip Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    #searchBar {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    #planetContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .planet-card {
+      border: 1px solid #ccc;
+      padding: 10px;
+      width: 180px;
+      text-align: center;
+      background: #fff;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .planet-card:hover {
+      background: #f0f8ff;
+    }
+
+    #tooltip {
+      position: absolute;
+      display: none;
+      background: #fff;
+      border: 1px solid #999;
+      padding: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 999;
+      max-width: 220px;
+      pointer-events: auto;
+    }
+
+    #tooltip img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <input id="searchBar" placeholder="Search exoplanets..." />
+  <div id="planetContainer"></div>
+  <div id="tooltip" class="tooltip"></div>
+
+  <script>
+    const planets = [
+      { pl_name: "Kepler-452b", hostname: "Kepler", url: "https://cdn.pixabay.com/photo/2013/07/12/18/20/space-153947_1280.png" },
+      { pl_name: "TRAPPIST-1e", hostname: "TRAPPIST", url: "https://cdn.pixabay.com/photo/2023/03/14/12/06/exoplanet-7852200_1280.jpg" },
+      { pl_name: "HD 189733 b", hostname: "HD 189733", url: "https://cdn.pixabay.com/photo/2014/12/15/17/16/space-569099_1280.jpg" },
+      { pl_name: "Proxima b", hostname: "Proxima Centauri", url: "https://cdn.pixabay.com/photo/2020/07/29/06/36/space-5448310_1280.jpg" },
+      { pl_name: "WASP-12b", hostname: "WASP", url: "https://cdn.pixabay.com/photo/2020/07/30/01/28/planet-5449645_1280.jpg" },
+      { pl_name: "GJ 1214b", hostname: "Gliese", url: "https://cdn.pixabay.com/photo/2017/06/18/18/36/exoplanet-2414792_1280.jpg" },
+      { pl_name: "TOI-700 d", hostname: "TOI Star", url: "https://cdn.pixabay.com/photo/2021/06/18/15/56/planet-6345911_1280.jpg" },
+      { pl_name: "Kepler-186f", hostname: "Kepler", url: "https://cdn.pixabay.com/photo/2013/07/12/15/35/planets-150166_1280.png" }
+    ];
+
+    const tooltip = document.getElementById("tooltip");
+    let hideTimeout = null;
+
+    document.getElementById("searchBar").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const filtered = planets.filter(p =>
+        p.pl_name.toLowerCase().includes(query) ||
+        p.hostname.toLowerCase().includes(query)
+      );
+      renderCards(filtered);
+    });
+
+    function renderCards(filteredPlanets) {
+      const container = document.getElementById('planetContainer');
+      container.innerHTML = "";
+
+      filteredPlanets.forEach((planet) => {
+        renderPlanetCard(planet);
+      });
+    }
+
+    function renderPlanetCard(planet) {
+      const container = document.getElementById('planetContainer');
+
+      const card = document.createElement('div');
+      card.className = 'planet-card';
+      card.dataset.planet = planet.pl_name;
+
+      card.innerHTML = `
+        <img class="planet-img" src="${planet.url}" alt="${planet.pl_name}" />
+        <h3>${planet.pl_name}</h3>
+        <p>${planet.hostname}</p>
+      `;
+
+      card.addEventListener('mouseenter', () => {
+        clearTimeout(hideTimeout);
+        showTooltip(planet.url, card, planet);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        hideTimeout = setTimeout(() => {
+          if (!tooltip.matches(':hover')) {
+            tooltip.style.display = 'none';
+          }
+        }, 150);
+      });
+
+      tooltip.addEventListener('mouseleave', () => {
+        tooltip.style.display = 'none';
+      });
+
+      container.appendChild(card);
+    }
+
+    function showTooltip(imageUrl, card, planet) {
+      tooltip.innerHTML = `
+        <img src="${imageUrl}" alt="${planet.pl_name}" />
+        <p><strong>${planet.pl_name}</strong></p>
+        <p>Host Star: ${planet.hostname}</p>
+      `;
+
+      const rect = card.getBoundingClientRect();
+      tooltip.style.left = `${rect.right + 10}px`;
+      tooltip.style.top = `${rect.top + window.scrollY}px`;
+      tooltip.style.display = 'block';
+    }
+
+    // Initial render
+    renderCards(planets);
+  </script>
+</body>
+</html>

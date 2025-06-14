@@ -9,8 +9,9 @@
   <meta property="og:description" content="Explore our solar system and beyond with PlanetPal." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="home.css" />
   <title>PlanetPal - Home</title>
+  <script type="module" src="home.js"></script>
 </head>
 <body>
   <header>
@@ -24,25 +25,56 @@
       </ul>
     </nav>
   </header>
-  <main>
-    <section class="intro">
-      <h2>Welcome to PlanetPal</h2>
-      <p>Your beginner's guide to the solar system and the universe beyond.</p>
+  <main >
+    <section class="intro" id="exoplanets">
+      <div>
+      
+      <p class="big-font">Exoplanets</p>
+      <p class="small-font">An exoplanet is any planet beyond our solar system. Most of them orbit other stars, but some free-floating exoplanets, called rogue planets, are untethered to any star. We’ve confirmed more than 5,800 exoplanets out of the billions that we believe exist.(NASA)<br><a href="https://science.nasa.gov/exoplanets/">NASA Exoplanet Archive</a></p>
+      <div class="container">
+        <div class="method-list" id="methodList"></div>
+    <button class="learn-btn">Learn More About Detection Methods</button>
+    
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+  </div>
+  
     </section>
-    <section id="exoplanets">
-      <h2>Recently Discovered Exoplanets</h2>
-      <div id="planetContainer"></div>
-      <div class="tooltip" id="tooltip">
-        <img src="" id="tooltipImg" alt="Preview" />
-        <p id="tooltipDesc">Planet description here.</p>
-        <p id="tooltipName">Planet description here.</p>
-        <a href="#" target="_blank" id="tooltipLink">View More</a>
+    <section class="remarks">
+      <div class="title">
+        <h1>Welcome to PlanetPal</h1>
+        <p>Your beginner's guide to the stellar system and the universe beyond.</p>
+        <a href="explore.html">Explore more Exoplanets and features</a>
+        <h2>Parameters and Terms</h2>
       </div>
+      <div class="termes">
+        
+        <div id="itemListContainer">
+          <ul id="itemList"></ul>
+        </div>
+
+      
+        <div id="detailModal" class="modal hidden">
+          <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+          </div>
+        </div>
+      </div>
+      
     </section>
+   
+      
+      
+      
+      
+    
   </main>
   <footer>
     <p>© 2025 PlanetPal | <a href="attributions.html">Attributions</a> | <a href="demo.html">Demo Video</a></p>
   </footer>
-  <script type="module" src="script.js"></script>
+  
 </body>
 </html>

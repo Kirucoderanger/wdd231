@@ -1,12 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explore Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PlanetPal - A beginner's guide to our solar system and exoplanets." />
+  <meta name="author" content="Kirubel" />
+  <meta property="og:title" content="PlanetPal" />
+  <meta property="og:description" content="Explore our solar system and beyond with PlanetPal." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="../scripts/explore.mjs" type="module"></script>
+  <title>PlanetPal - Home</title>
 </head>
 <body>
-  <h1>Explore Page</h1>
-  <p>Explore more planets and features soon.</p>
+  <header>
+    <h1>PlanetPal</h1>
+    <nav>
+      <button id="menuToggle">☰</button>
+      <ul id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+  <div class="form-container">
+    <section class="intro" id="exoplanets">
+      
+      
+      <h1>Explore Exoplanet</h1>
+      <p>Explore more planets and features soon.</p>
+      <h2>Recently Discovered Exoplanets</h2>
+    </section>
+    <section class="preview">
+     <div class="preview-form">
+      <h1>Exoplanet Data Viewer</h1>
+      <form id="filterForm">
+        
+        <fieldset>
+          <legend>Retrieval Mode:</legend>
+          <label><input type="radio" name="mode" value="sequential" checked> Sequential</label>
+          <label><input type="radio" name="mode" value="random"> Random</label>
+        </fieldset>
+        <button type="submit">Apply Filters</button><button id="clearFiltersBtn">Clear Filter</button><br>
+        <button id="prevBtn1">Previous</button>
+        <button id="nextBtn1">Next</button>
+        <p id="pageInfo1"></p>
+        <fieldset>
+          <legend >Filter by:</legend>
+          <div id="filterTree">
+        </div>
+        </fieldset>
+      </form>
+      
+        
+     </div>
+     <div class="preview-content">
+      <div style="text-align: center; padding: 20px;">
+    <input 
+      type="text" 
+      id="searchBar" 
+      placeholder="Search by name, type, moons, or fact..." 
+      style="padding: 10px 15px; width: 260px; border-radius: 8px; border: none; outline: none; font-size: 16px; background: #333; color: white;"
+    /></div>
+      <div id="planetContainer">
+        
+        <div class="tooltip" id="tooltip" hidden>
+          <button class="toggle-btn" title="Click to view details">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+              <path d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm0 64a48 48 0 110 96 48 48 0 010-96zm56 280c0 4.4-3.6 8-8 8h-96c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h16v-88h-16c-4.4 0-8-3.6-8-8v-16c0-4.4 3.6-8 8-8h64c4.4 0 8 3.6 8 8v112h16c4.4 0 8 3.6 8 8v16z"/>
+            </svg>
+            Detail
+          </button>
+          <div class="dropdown">
+           <div class="more-btn">More Info ▼</div>
+            <div class="more-info"></div>
+            
+          
+        </div>
+          <img src="" id="tooltipImg" alt="Preview"/>
+          <p id="tooltipDesc">Planet description here.</p>
+          <p id="tooltipName">Planet description here.</p>
+          <a href="#" target="_blank" id="tooltipLink">NASA Exoplanet Archive Overview</a>
+        </div>
+      </div>
+      
+      <div id="pagination">
+        <button id="prevPage">Previous</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage">Next</button>
+      </div>
+    </div>
+      
+    </section>
+  </main>
+  <footer>
+    <p>© 2025 PlanetPal | <a href="attributions.html">Attributions</a> | <a href="demo.html">Demo Video</a></p>
+  </footer>
+  
 </body>
 </html>

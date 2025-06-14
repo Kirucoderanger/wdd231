@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expandable Checkbox Tree</title>
+  <style>
+    .parent-container {
+      margin: 1em 0;
+    }
+
+    .toggle-btn {
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .children {
+      margin-left: 20px;
+      display: none;
+    }
+
+    .children.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="parent-container">
+    <span class="toggle-btn">+</span>
+    <label><input type="checkbox" class="parent-checkbox"> Planet Types</label>
+    <div class="children">
+      <label><input type="checkbox" class="child-checkbox"> Gas Giant</label><br>
+      <label><input type="checkbox" class="child-checkbox"> Terrestrial</label><br>
+      <label><input type="checkbox" class="child-checkbox"> Ice Giant</label><br>
+      <label><input type="checkbox" class="child-checkbox"> Super-Earth</label>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.querySelector(".toggle-btn");
+    const childrenContainer = document.querySelector(".children");
+    const parentCheckbox = document.querySelector(".parent-checkbox");
+    const childCheckboxes = document.querySelectorAll(".child-checkbox");
+
+    toggleBtn.addEventListener("click", () => {
+      childrenContainer.classList.toggle("visible");
+      toggleBtn.textContent = childrenContainer.classList.contains("visible") ? "−" : "+";
+    });
+
+    parentCheckbox.addEventListener("change", () => {
+      childCheckboxes.forEach(child => {
+        child.checked = parentCheckbox.checked;
+      });
+    });
+
+    childCheckboxes.forEach(child => {
+      child.addEventListener("change", () => {
+        const allChecked = [...childCheckboxes].every(c => c.checked);
+        parentCheckbox.checked = allChecked;
+      });
+    });
+  </script>
+
+</body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Checkbox Tree</title>
+  <style>
+    .parent-container {
+      margin: 1em 0;
+    }
+
+    .toggle-btn {
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .children {
+      margin-left: 20px;
+      display: none;
+    }
+
+    .children.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div id="checkboxTreeContainer"></div>
+
+<script>
+  const checkboxData = [
+    {
+      label: 'Planet Types',
+      children: ['Gas Giant', 'Terrestrial', 'Ice Giant', 'Super-Earth']
+    },
+    {
+      label: 'Discovery Methods',
+      children: ['Transit', 'Radial Velocity', 'Imaging', 'Microlensing']
+    },
+    {
+      label: 'Host Star Type',
+      children: ['M Dwarf', 'G Star', 'K Star']
+    }
+  ];
+
+  function createCheckboxTree(containerId, data) {
+    const container = document.getElementById(containerId);
+
+    data.forEach(group => {
+      const groupWrapper = document.createElement('div');
+      groupWrapper.className = 'parent-container';
+
+      // Toggle button
+      const toggleBtn = document.createElement('span');
+      toggleBtn.className = 'toggle-btn';
+      toggleBtn.textContent = '+';
+
+      // Parent checkbox
+      const parentLabel = document.createElement('label');
+      const parentCheckbox = document.createElement('input');
+      parentCheckbox.type = 'checkbox';
+      parentCheckbox.className = 'parent-checkbox';
+      parentLabel.appendChild(parentCheckbox);
+      parentLabel.append(` ${group.label}`);
+
+      // Children container
+      const childDiv = document.createElement('div');
+      childDiv.className = 'children';
+
+      const childCheckboxes = [];
+
+      group.children.forEach(childText => {
+        const childLabel = document.createElement('label');
+        const childCheckbox = document.createElement('input');
+        childCheckbox.type = 'checkbox';
+        childCheckbox.className = 'child-checkbox';
+        childCheckbox.value = childText;
+
+        childLabel.appendChild(childCheckbox);
+        childLabel.append(` ${childText}`);
+        childDiv.appendChild(childLabel);
+        childDiv.appendChild(document.createElement('br'));
+
+        childCheckboxes.push(childCheckbox);
+      });
+
+      // Toggle expand/collapse
+      toggleBtn.addEvent
+Listener('click', () => {
+        childDiv.classList.toggle('visible');
+        toggleBtn.textContent = childDiv.classList.contains('visible') ? '−' : '+';
+      });
+      groupWrapper.appendChild(toggleBtn);
+        groupWrapper.appendChild(parentLabel);
+        groupWrapper.appendChild(childDiv);
+        container.appendChild(groupWrapper);
+        // Parent checkbox logic
+        parentCheckbox.addEventListener('change', () => {
+          childCheckboxes.forEach(child => {
+            child.checked = parentCheckbox.checked;
+          });
+        });
+        // Child checkbox logic
+        childCheckboxes.forEach(child => {
+          child.addEventListener('change', () => {
+            const allChecked = childCheckboxes.every(c => c.checked);
+            parentCheckbox.checked = allChecked;
+          });
+        });
+        });
+    }
+
+    createCheckboxTree('checkboxTreeContainer', checkboxData);
+  </script>
+
+</body>
+</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Checkbox Tree</title>
+  <style>
+    .parent-container {
+      margin: 1em 0;
+    }
+    .toggle-btn {
+      cursor: pointer;
+      font-weight: bold;
+      margin-right: 6px;
+    }
+    .children {
+      margin-left: 20px;
+      display: none;
+    }
+    .children.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="filterTree"></div>
+
+  <script>
+    const filterOptions = [
+      {
+        label: 'Planet Types',
+        children: ['Gas Giant', 'Terrestrial', 'Ice Giant', 'Super-Earth']
+      },
+      {
+        label: 'Discovery Method',
+        children: ['Transit', 'Radial Velocity', 'Imaging', 'Microlensing']
+      },
+      {
+        label: 'Status',
+        children: ['Confirmed', 'Candidate', 'False Positive']
+      }
+    ];
+    
+
+    const container = document.getElementById('filterTree');
+
+    filterOptions.forEach((group, index) => {
+      const groupContainer = document.createElement('div');
+      groupContainer.className = 'parent-container';
+
+      // Toggle Button
+      const toggleBtn = document.createElement('span');
+      toggleBtn.className = 'toggle-btn';
+      toggleBtn.textContent = '+';
+
+      // Parent Checkbox
+      const parentLabel = document.createElement('label');
+      const parentCheckbox = document.createElement('input');
+      parentCheckbox.type = 'checkbox';
+      parentCheckbox.className = 'parent-checkbox';
+      parentLabel.appendChild(parentCheckbox);
+      parentLabel.append(` ${group.label}`);
+
+      // Children Container
+      const childrenDiv = document.createElement('div');
+      childrenDiv.className = 'children';
+
+      group.children.forEach(childName => {
+        const childLabel = document.createElement('label');
+        const childCheckbox = document.createElement('input');
+        childCheckbox.type = 'checkbox';
+        childCheckbox.className = 'child-checkbox';
+        childCheckbox.dataset.group = index;
+        childLabel.appendChild(childCheckbox);
+        childLabel.append(` ${childName}`);
+        childrenDiv.appendChild(childLabel);
+        childrenDiv.appendChild(document.createElement('br'));
+      });
+
+      // Append elements
+      groupContainer.appendChild(toggleBtn);
+      groupContainer.appendChild(parentLabel);
+      groupContainer.appendChild(childrenDiv);
+      container.appendChild(groupContainer);
+
+      // Toggle handler
+      toggleBtn.addEventListener('click', () => {
+        childrenDiv.classList.toggle('visible');
+        toggleBtn.textContent = childrenDiv.classList.contains('visible') ? '−' : '+';
+      });
+
+      // Select/Deselect all children
+      parentCheckbox.addEventListener('change', () => {
+        const childBoxes = childrenDiv.querySelectorAll('.child-checkbox');
+        childBoxes.forEach(box => box.checked = parentCheckbox.checked);
+      });
+
+      // If all children are checked, parent becomes checked too
+      const childBoxes = childrenDiv.querySelectorAll('.child-checkbox');
+      childBoxes.forEach(box => {
+        box.addEventListener('change', () => {
+          const allChecked = [...childBoxes].every(c => c.checked);
+          parentCheckbox.checked = allChecked;
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
+

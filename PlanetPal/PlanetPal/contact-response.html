@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank You – PlanetPal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1c1c1c;
+      color: white;
+      padding: 2rem;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    .response {
+      background: #2c2c2c;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Thanks for Reaching Out!</h1>
+  <p>We received your message. Here’s a summary:</p>
+  <div class="response" id="responseContainer"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const responseDiv = document.getElementById("responseContainer");
+
+    const email = params.get("email");
+    const whatsapp = params.get("whatsapp");
+    const feedback = params.get("feedback");
+    const message = params.get("message");
+
+    responseDiv.innerHTML = `
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>WhatsApp:</strong> ${whatsapp}</p>
+      <p><strong>Feedback:</strong> ${feedback.replace(/_/g, " ")}</p>
+      <p><strong>Message:</strong><br>${message}</p>
+    `;
+  </script>
+</body>
+</html>
