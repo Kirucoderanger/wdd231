@@ -3,16 +3,6 @@
 import { getExoplanets } from "./getExoplanets.js";
 
 
-
-
-
-
-    
-
-
-
-
-
 const tooltip = document.getElementById('tooltip');
 const tooltipImg = document.getElementById('tooltipImg');
 const tooltipDesc = document.getElementById('tooltipDesc');

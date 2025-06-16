@@ -65,12 +65,12 @@ const filterTree = document.getElementById('filterTree');
   }
 });*/
 
-filterTree.addEventListener('change', saveFilters);
+//filterTree.addEventListener('change', saveFilters);
 filterForm.addEventListener('change', saveFilters);
 filterForm.addEventListener('submit', (e) => {
   e.preventDefault(); // prevent form reload
   saveFilters();
-  createFilterTree(); // your actual filter function
+  //createFilterTree(); // your actual filter function
 });
 
 

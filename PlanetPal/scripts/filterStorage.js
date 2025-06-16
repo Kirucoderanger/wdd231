@@ -1,10 +1,12 @@
+import { createFilterTree } from "./createFilterTree.js";
 const filterForm = document.getElementById('filterForm');
+const filterTree = document.getElementById('filterTree');
 
 filterForm.addEventListener('change', saveFilters);
 filterForm.addEventListener('submit', (e) => {
   e.preventDefault(); // prevent form reload
   saveFilters();
-  createFilterTree(); // your actual filter function
+  //createFilterTree(); // your actual filter function
 });
 
 export function saveFilters() {
@@ -12,7 +14,9 @@ export function saveFilters() {
   
   // Collect checkbox filters if any
   const filters = {};
-  const checkboxes = filterForm.querySelectorAll('#filterTree input[type="checkbox"]');
+   const checkboxes = filterForm.querySelectorAll('#filterTree input[type="checkbox"]');
+
+  //const checkboxes = filterForm.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(cb => {
     filters[cb.name] = cb.checked;
   });
