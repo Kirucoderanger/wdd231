@@ -18,7 +18,19 @@ export function saveFilters() {
 
   //const checkboxes = filterForm.querySelectorAll('input[type="checkbox"]');
   checkboxes.forEach(cb => {
-    filters[cb.name] = cb.checked;
+  if (!cb.checked) return; // Skip unchecked boxes
+  // If the checkbox is checked, add it to the filters object
+  if (!filters.hasOwnProperty(cb.name)) {
+    filters[cb.name] = {};
+  }
+  filters[cb.name][cb.value] = cb.checked;
+  if (cb.dataset.group) {
+    filters[cb.name].group = cb.dataset.group; // Store group index if available  
+  }
+  if (cb.dataset.label) {
+    filters[cb.name].label = cb.dataset.label; // Store label if available
+  }
+
   });
 
   const data = {
@@ -49,9 +61,19 @@ export function restoreFilters() {
   if (filters) {
     const checkboxes = filterForm.querySelectorAll('#filterTree input[type="checkbox"]');
     checkboxes.forEach(cb => {
-      if (filters.hasOwnProperty(cb.name)) {
-        cb.checked = filters[cb.name];
+      // If the checkbox is in the saved filters, set its checked state
+      if (!filters.hasOwnProperty(cb.name)) return; // Skip unchecked boxes
+      if (filters[cb.name].hasOwnProperty(cb.value)) {
+        cb.checked = filters[cb.name][cb.value];
       }
+      // If the checkbox has a group or label, set those attributes
+      if (cb.dataset.group && filters[cb.name].group !== undefined) {
+        cb.dataset.group = filters[cb.name].group;
+      }
+      if (cb.dataset.label && filters[cb.name].label !== undefined) {
+        cb.dataset.label = filters[cb.name].label;
+      }
+      
     });
   }
 }
