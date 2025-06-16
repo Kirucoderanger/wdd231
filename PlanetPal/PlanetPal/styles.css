@@ -28,6 +28,10 @@ main {
   padding: 1rem;
 }
 
+.active a {
+  color: #4FC3F7;
+  font-weight: bold;
+}
 .preview {
   display: grid;
   grid-template-columns: 20% 80%;

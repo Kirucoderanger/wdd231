@@ -25,6 +25,11 @@ nav ul li a {
 #menuToggle {
   display: none;
 }
+
+.active a {
+  color: #4FC3F7;
+  font-weight: bold;
+}
 /*main {
     > * {
         flex: 1 1 50%;

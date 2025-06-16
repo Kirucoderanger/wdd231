@@ -1,72 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PlanetPal - A beginner's guide to our solar system and exoplanets." />
+  <meta name="author" content="Kirubel" />
+  <meta property="og:title" content="PlanetPal" />
+  <meta property="og:description" content="Explore our solar system and beyond with PlanetPal." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="../styles/contact.css" />
+  <script src="../scripts/contact.js" type="module"></script>
   <title>Contact PlanetPal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0e0e0e;
-      color: #fff;
-      padding: 2rem;
-      max-width: 600px;
-      margin: auto;
-    }
-    h1 {
-      color: #4FC3F7;
-    }
-
-    .container {
-      background: #1c1c1c;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      max-width: 400px;
-      margin: 0 auto;
-    }
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      
-    }
-    input, textarea {
-      padding: 0.8rem;
-      border-radius: 6px;
-      border: none;
-      font-size: 1rem;
-      width: 100%;
-      max-width: 370px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    select {
-      padding: 0.8rem;
-      border-radius: 6px;
-      border: none;
-      font-size: 1rem;
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-   
-    button {
-      padding: 0.8rem;
-      background: #4FC3F7;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #039BE5;
-    }
-  </style>
+  
 </head>
 <body>
+  <header>
+    <h1>PlanetPal</h1>
+    <nav>
+      <button id="menuToggle">☰</button>
+      <ul id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="explore.html">Explore</a></li>
+        <li class="active"><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
     <div class="container">
   <h1>Contact PlanetPal</h1>
   <p>We'd love to hear your thoughts, questions, or partnership ideas. Reach out anytime!</p>
@@ -101,6 +61,11 @@
     <button type="submit">Send Message</button>
   </form>
     </div>
+  </main>
+  <footer>
+    
+            <p>&copy; 2025 PlanetPal. All rights reserved | <a href="https://drive.google.com/file/d/1Ah41O_-CZDYA5GSWOp-BRJXO65nXAtQM/view">Project Demo video</a> | <a href="resource-attributions.html">Resource Attributions</a></p>
+  </footer>
 
   <script>
     document.getElementById("contactForm").addEventListener("submit", function (e) {

@@ -1,5 +1,10 @@
 import { parameter } from "../data/exoplanetProperties.mjs";
 import { discoveryMethod } from "../data/exoplanetProperties.mjs";
+
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('show');
+});
+
 console.log(parameter);
 
  const data = [

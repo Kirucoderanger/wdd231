@@ -6,7 +6,7 @@ filterForm.addEventListener('change', saveFilters);
 filterForm.addEventListener('submit', (e) => {
   e.preventDefault(); // prevent form reload
   saveFilters();
-  //createFilterTree(); // your actual filter function
+  //createFilterTree(); // actual filter function
 });
 
 export function saveFilters() {
