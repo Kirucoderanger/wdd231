@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compare planets with PlanetPal. Discover facts, sizes, and more about planets in our solar system.">
+    <title>Planet Compare | PlanetPal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+        .form-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container form label {
+            margin-bottom: 10px;
+        }
+        .form-container form input, .form-container form select, .form-container form textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container form button {
+            padding: 10px;
+            background-color: #4e8cff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .exoplanet-preview, .exoplanet-details, .exoplanet-facts, .exoplanet-graph, .exoplanet-compare, .exoplanet-resources {
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .centered-search-bar {
+            text-align: center;
+            padding: 20px;
+        }
+        .centered-search-bar input {
+            padding: 10px 15px;
+            width: 260px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background: #333;
+            color: white;
+        }
+        .exoplanet-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .exoplanet-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            width: calc(33.333% - 20px);
+            box-sizing: border-box;
+        }
+        .exoplanet-item h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+        .exoplanet-item p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .exoplanet-item button {
+            background-color: #4e8cff;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .exoplanet-item button:hover {
+            background-color: #3a6bbf;
+        }
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #333;
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .exoplanet-graph {
+            text-align: center;
+        }
+        #graphContainer {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+        }
+        #exoplanetGraph {
+            width: 100%;
+            height: 100%;
+        }
+        .exoplanet-compare {
+            margin-top: 20px;
+        }
+        #comparisonForm {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #comparisonForm select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        #comparisonResult {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .exoplanet-resources ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .exoplanet-resources li {
+            margin: 5px 0;
+        }
+        .exoplanet-resources a {
+            color: #4e8cff;
+            text-decoration: none;
+        }
+        .exoplanet-resources a:hover {
+            text-decoration: underline;
+        }
+        .exoplanet-facts {
+            margin-top: 20px;
+        }
+        .exoplanet-facts ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+        .exoplanet-facts li {
+            margin: 5px 0;
+        }
+        .exoplanet-facts h2 {
+            margin-top: 0;
+        }
+        .exoplanet-details {
+            margin-top: 20px;
+        }
+        .exoplanet-details div {
+            margin-bottom: 15px;
+        }
+        .exoplanet-details h2 {
+            margin-top: 0;
+        }
+        .exoplanet-details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .exoplanet-details button {
+            background-color: #4e8cff;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .exoplanet-details button:hover {
+            background-color: #3a6bbf;
+        }
+        .exoplanet-details .pagination {
+            margin-top: 10px;
+        }
+        .exoplanet-details .pagination button {
+            margin: 0 5px;
+        }
+        .exoplanet-details .pagination p {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .exoplanet-facts .pagination {
+            margin-top: 10px;
+        }
+        .exoplanet-facts .pagination button {
+            margin: 0 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Planet Compare</h1>
+    </header>
+    <main>
+        <!-- Main content goes here -->
+         <section class="exoplanet-preview">
+      <h2>Exoplanet Data Viewer</h2>
+      <div class="preview-form">
+        <form id="filterForm">
+          <fieldset>
+            <legend>Retrieval Mode:</legend>
+            <label><input type="radio" name="mode" value="sequential" checked> Sequential</label>
+            <label><input type="radio" name="mode" value="random"> Random</label>
+          </fieldset>
+          <button type="submit">Apply Filters</button>
+          <button id="clearFiltersBtn" type="button">Clear Filter</button><br>
+          <button id="prevBtn1" type="button">Previous</button>
+          <button id="nextBtn1" type="button">Next</button>
+          <p id="pageInfo1"></p>
+          <fieldset>
+            <legend>Filter by:</legend>
+            <div id="filterTree"></div>
+        <div class="centered-search-bar">
+          <input 
+            type="text" 
+            id="searchBar" 
+            placeholder="Search for exoplanets..." 
+            aria-label="Search for exoplanets"
+          />
+        </div>
+        </fieldset>
+        <div id="exoplanetList"></div>
+        </form>
+        
+      </div>
+    </section>
+    <section class="exoplanet-details">
+      <h2>Exoplanet Details</h2>
+      <div id="exoplanetDetails"></div>
+      <div class="pagination">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
+        <p id="pageInfo"></p>
+      </div>
+    </section>
+    <section class="exoplanet-facts">
+      <h2>Exoplanet Facts</h2>
+      <div id="exoplanetFacts"></div>
+      <div class="pagination">
+        <button id="prevFactBtn">Previous</button>
+        <button id="nextFactBtn">Next</button>
+        <p id="factPageInfo"></p>
+      </div>
+    </section>
+    <section class="exoplanet-graph">
+      <h2>Exoplanet Graph</h2>
+      <div id="graphContainer">
+        <canvas id="exoplanetGraph"></canvas>
+      </div>
+      <div class="pagination">
+        <button id="prevGraphBtn">Previous</button>
+        <button id="nextGraphBtn">Next</button>
+        <p id="graphPageInfo"></p>
+      </div>
+    </section>
+    <section class="exoplanet-compare">
+      <h2>Exoplanet Comparison</h2>
+      <div id="comparisonContainer">
+        <div id="comparisonForm">
+          <label for="planet1">Select Planet 1:</label>
+
+          <select id="planet1"></select>
+          <label for="planet2">Select Planet 2:</label>
+          <select id="planet2"></select>
+          <button id="compareBtn">Compare</button>
+        </div>
+        <div id="comparisonResult"></div>
+      </div>
+    </section>
+    <section class="exoplanet-resources">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://exoplanets.nasa.gov/">NASA Exoplanet Exploration</a></li>
+        <li><a href="https://www.esa.int/Science_Exploration/Space_Science/Exoplanets">ESA Exoplanets</a></li>
+        <li><a href="https://www.cfa.harvard.edu/ExoPlanet">Harvard Exoplanet Research</a></li>
+      </ul>
+    </section>
+  </section>
+  </div> 
+    </main>
+    <footer>
+        <p>&copy; 2024 PlanetPal</p>
+    </footer>
+    <script> 
+        /**
+         * Array of functionalities for the Exoplanet Compare page.
+         */
+        const functionalities = [
+            {
+                name: "Exoplanet Data Viewer",
+                description: "Browse and filter exoplanet data, search by name, and view a list of discovered exoplanets."
+            },
+            {
+                name: "Exoplanet Details",
+                description: "View detailed information about a selected exoplanet, including its properties and discovery data."
+            },
+            {
+                name: "Exoplanet Facts",
+                description: "Learn interesting facts about exoplanets, habitable zones, and comparisons with Solar System planets."
+            },
+            {
+                name: "Exoplanet Graph",
+                description: "Visualize exoplanet data and comparisons using interactive graphs."
+            },
+            {
+                name: "Exoplanet Comparison",
+                description: "Compare two planets side by side based on mass, radius, and distance from their star."
+            }
+        ];
+
+        // Draw functionalities on the exoplanetGraph canvas
+        function drawFunctionalitiesOnGraph() {
+            const canvas = document.getElementById('exoplanetGraph');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            // Set canvas size
+            canvas.width = 600;
+            canvas.height = 350;
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw title
+            ctx.font = "bold 20px Arial";
+            ctx.fillStyle = "#222";
+            ctx.textAlign = "center";
+            ctx.fillText("PlanetPal Functionalities Overview", canvas.width / 2, 35);
+
+            // Draw nodes for each functionality
+            const nodeRadius = 40;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2 + 20;
+            const angleStep = (2 * Math.PI) / functionalities.length;
+
+            functionalities.forEach((func, i) => {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + 180 * Math.cos(angle);
+                const y = centerY + 110 * Math.sin(angle);
+
+                // Draw node circle
+                ctx.beginPath();
+                ctx.arc(x, y, nodeRadius, 0, 2 * Math.PI);
+                ctx.fillStyle = "#4e8cff";
+                ctx.globalAlpha = 0.85;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.strokeStyle = "#1a3a6b";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Draw node label
+                ctx.font = "bold 13px Arial";
+                ctx.fillStyle = "#fff";
+                ctx.textAlign = "center";
+                ctx.fillText(func.name, x, y + 5);
+
+                // Draw description (below node)
+                ctx.font = "11px Arial";
+                ctx.fillStyle = "#222";
+                ctx.textAlign = "center";
+                ctx.fillText(func.description, x, y + nodeRadius + 18, 160);
+            });
+
+            // Draw lines from center to each node
+            ctx.strokeStyle = "#bbb";
+            ctx.lineWidth = 1.5;
+            functionalities.forEach((func, i) => {
+                const angle = i * angleStep - Math.PI / 2;
+                const x = centerX + 180 * Math.cos(angle);
+                const y = centerY + 110 * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            });
+
+            // Draw center circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+            ctx.fillStyle = "#ffb347";
+            ctx.fill();
+            ctx.strokeStyle = "#b97c1b";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.font = "bold 14px Arial";
+            ctx.fillStyle = "#333";
+            ctx.textAlign = "center";
+            ctx.fillText("PlanetPal", centerX, centerY + 5);
+        }
+
+        drawFunctionalitiesOnGraph();
+        // JavaScript code to handle the functionality of the compare page
+        document.addEventListener('DOMContentLoaded', () => {
+            const planet1Select = document.getElementById('planet1');
+            const planet2Select = document.getElementById('planet2');
+            const compareBtn = document.getElementById('compareBtn');
+            const comparisonResult = document.getElementById('comparisonResult');
+            const planets = [
+                { name: 'Earth', mass: '5.972 × 10^24 kg', radius: '6,371 km', distanceFromSun: '149.6 million km' },
+                { name: 'Mars', mass: '0.64171 × 10^24 kg', radius: '3,389.5 km', distanceFromSun: '227.9 million km' },
+                { name: 'Jupiter', mass: '1.898 × 10^27 kg', radius: '69,911 km', distanceFromSun: '778.5 million km' },
+                { name: 'Saturn', mass: '5.683 × 10^26 kg', radius: '58,232 km', distanceFromSun: '1.429 billion km' },
+                // Add more planets as needed
+            ];  
+
+            // Populate the planet selection dropdowns
+            planets.forEach((planet, index) => {
+                const option1 = document.createElement('option');
+                option1.value = index;
+                option1.textContent = planet.name;
+                planet1Select.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = index;
+                option2.textContent = planet.name;
+                planet2Select.appendChild(option2);
+            });
+
+            // Compare button click event
+            compareBtn.addEventListener('click', () => {
+                if (planet1Select.value === planet2Select.value) {
+                    comparisonResult.innerHTML = '<p>Please select two different planets to compare.</p>';
+                    return;
+                }
+
+                const planet1 = planets[planet1Select.value];
+                const planet2 = planets[planet2Select.value];
+                comparisonResult.innerHTML = `
+                    <h3>Comparison Result</h3>
+                    <p><strong>${planet1.name}</strong> vs <strong>${planet2.name}</strong></p>
+                    <ul>
+                        <li><strong>Mass:</strong> ${planet1.mass} vs ${planet2.mass}</li>
+                        <li><strong>Radius:</strong> ${planet1.radius} vs ${planet2.radius}</li>
+                        <li><strong>Distance from Sun:</strong> ${planet1.distanceFromSun} vs ${planet2.distanceFromSun}</li>
+                    </ul>
+                `;
+            });
+        });
+        // Add any additional JavaScript functionality needed for the compare page
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const pageInfo = document.getElementById('pageInfo');
+            let currentPage = 1;
+            const totalPages = 10; // Example total pages
+
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePageInfo();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePageInfo();
+                }
+            });
+
+            function updatePageInfo() {
+                pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            }
+            updatePageInfo();
+            const prevFactBtn = document.getElementById('prevFactBtn');
+            const nextFactBtn = document.getElementById('nextFactBtn');
+            const factPageInfo = document.getElementById('factPageInfo');
+            let currentFactPage = 1;
+            const totalFactPages = 5; // Example total fact pages
+
+            prevFactBtn.addEventListener('click', () => {
+                if (currentFactPage > 1) {
+                    currentFactPage--;
+                    updateFactPageInfo();
+                }
+            });
+            /**
+             * Additional exoplanet comparison methods.
+             */
+
+            // Compare by mass (returns the heavier planet)
+            function compareByMass(planetA, planetB) {
+                // Assumes mass is in the format "X × 10^Y kg"
+                function parseMass(massStr) {
+                    const match = massStr.match(/([\d.]+)\s*×\s*10\^([\d-]+)/);
+                    if (match) {
+                        return parseFloat(match[1]) * Math.pow(10, parseInt(match[2]));
+                    }
+                    return NaN;
+                }
+                const massA = parseMass(planetA.mass);
+                const massB = parseMass(planetB.mass);
+                if (massA > massB) return planetA.name;
+                if (massB > massA) return planetB.name;
+                return 'Equal mass';
+            }
+
+            // Compare by radius (returns the larger planet)
+            function compareByRadius(planetA, planetB) {
+                // Assumes radius is in the format "X,XXX km"
+                function parseRadius(radiusStr) {
+                    return parseFloat(radiusStr.replace(/,/g, '').replace(' km', ''));
+                }
+                const radiusA = parseRadius(planetA.radius);
+                const radiusB = parseRadius(planetB.radius);
+                if (radiusA > radiusB) return planetA.name;
+                if (radiusB > radiusA) return planetB.name;
+                return 'Equal radius';
+            }
+
+            // Compare by distance from Sun (returns the farther planet)
+            function compareByDistance(planetA, planetB) {
+                // Handles "million km" and "billion km"
+                function parseDistance(distStr) {
+                    let num = parseFloat(distStr.replace(/,/g, ''));
+                    if (distStr.includes('billion')) num *= 1e9;
+                    else if (distStr.includes('million')) num *= 1e6;
+                    return num;
+                }
+                const distA = parseDistance(planetA.distanceFromSun);
+                const distB = parseDistance(planetB.distanceFromSun);
+                if (distA > distB) return planetA.name;
+                if (distB > distA) return planetB.name;
+                return 'Equal distance';
+            }
+
+            // Example usage (uncomment to use in compareBtn event):
+            // const heavier = compareByMass(planet1, planet2);
+            // const larger = compareByRadius(planet1, planet2);
+            // const farther = compareByDistance(planet1, planet2);
+
+            nextFactBtn.addEventListener('click', () => {
+                if (currentFactPage < totalFactPages) {
+                    currentFactPage++;
+                    updateFactPageInfo();
+                }
+            });
+
+            function updateFactPageInfo() {
+                factPageInfo.textContent = `Fact Page ${currentFactPage} of ${totalFactPages}`;
+            }
+            updateFactPageInfo();
+
+        // Add any additional JavaScript functionality needed for the compare page
+            const filterForm = document.getElementById('filterForm');
+            filterForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                // Logic to apply filters and update the exoplanet list
+                const mode = document.querySelector('input[name="mode"]:checked').value;
+                console.log(`Filters applied with mode: ${mode}`);
+                // Add logic to fetch and display filtered exoplanets
+            });
+            // Clear filters button functionality
+
+            const clearFiltersBtn = document.getElementById('clearFiltersBtn');
+            clearFiltersBtn.addEventListener('click', () => {
+                document.getElementById('filterForm').reset();
+            });
+            const searchBar = document.getElementById('searchBar');
+            searchBar.addEventListener('input', () => {
+                const query = searchBar.value.toLowerCase();
+                const exoplanetList = document.getElementById('exoplanetList');
+                const planets = exoplanetList.querySelectorAll('.exoplanet-item');
+                planets.forEach(planet => {
+                    const name = planet.querySelector('.planet-name').textContent.toLowerCase();
+                    if (name.includes(query)) {
+                        planet.style.display = '';
+                    } else {
+                        planet.style.display = 'none';
+                    }
+                });
+            });
+        // Add any additional JavaScript functionality needed for the compare page
+        const exoplanetList = document.getElementById('exoplanetList');
+        const exoplanetDetails = document.getElementById('exoplanetDetails');
+        const exoplanetFacts = document.getElementById('exoplanetFacts');
+        const exoplanetGraph = document.getElementById('exoplanetGraph');
+        const graphContainer = document.getElementById('graphContainer');
+        const comparisonContainer = document.getElementById('comparisonContainer');
+        const planet1Select = document.getElementById('planet1');
+        const planet2Select = document.getElementById('planet2');   
+        const compareBtn = document.getElementById('compareBtn');
+        const comparisonResult = document.getElementById('comparisonResult');
+        const planets = [
+            { name: 'Earth', mass: '5.972 × 10^24 kg', radius: '6,371 km', distanceFromSun: '149.6 million km' },
+            { name: 'Mars', mass: '0.64171 × 10^24 kg', radius: '3,389.5 km', distanceFromSun: '227.9 million km' },
+            { name: 'Jupiter', mass: '1.898 × 10^27 kg', radius: '69,911 km', distanceFromSun: '778.5 million km' },
+            { name: 'Saturn', mass: '5.683 × 10^26 kg', radius: '58,232 km', distanceFromSun: '1.429 billion km' },
+            // Add more planets as needed
+        ];
+        // Populate the planet selection dropdowns
+        planets.forEach((planet, index) => {
+            const option1 = document.createElement('option');
+            option1.value = index;
+            option1.textContent = planet.name;
+            planet1Select.appendChild(option1);
+
+            const option2 = document.createElement('option');
+            option2.value = index;
+            option2.textContent = planet.name;
+            planet2Select.appendChild(option2);
+        });
+        // Compare button click event
+        compareBtn.addEventListener('click', () => {
+            if (planet1Select.value === planet2Select.value) {
+                comparisonResult.innerHTML = '<p>Please select two different planets to compare.</p>';
+                return;
+            }
+
+            const planet1 = planets[planet1Select.value];
+            const planet2 = planets[planet2Select.value];
+            comparisonResult.innerHTML = `
+                <h3>Comparison Result</h3>
+                <p><strong>${planet1.name}</strong> vs <strong>${planet2.name}</strong></p>
+                <ul>
+                    <li><strong>Mass:</strong> ${planet1.mass} vs ${planet2.mass}</li>
+                    <li><strong>Radius:</strong> ${planet1.radius} vs ${planet2.radius}</li>
+                    <li><strong>Distance from Sun:</strong> ${planet1.distanceFromSun} vs ${planet2.distanceFromSun}</li>
+                </ul>
+            `;
+        });
+        /**
+         * Analyze exoplanet stellar parameters, calculate Goldilocks (habitable) zone,
+         * compare with Solar System planets, and suggest possible life sustainability.
+         */
+
+        // Example function to calculate habitable zone (Goldilocks zone) in AU
+        function calculateHabitableZone(luminosity) {
+            // Conservative habitable zone: 0.95–1.67 AU * sqrt(luminosity)
+            const inner = 0.95 * Math.sqrt(luminosity);
+            const outer = 1.67 * Math.sqrt(luminosity);
+            return { inner, outer };
+        }
+
+        // Example exoplanet and star data (replace with real data as needed)
+        const exoplanet = {
+            name: "Kepler-442b",
+            distanceFromStar: 1.12, // AU
+            star: {
+                name: "Kepler-442",
+                luminosity: 0.61 // Solar luminosity
+            }
+        };
+
+        // Solar System planets (distance from Sun in AU)
+        const solarPlanets = [
+            { name: "Mercury", distance: 0.39 },
+            { name: "Venus", distance: 0.72 },
+            { name: "Earth", distance: 1.00 },
+            { name: "Mars", distance: 1.52 },
+            { name: "Jupiter", distance: 5.20 },
+            { name: "Saturn", distance: 9.58 }
+        ];
+
+        // Calculate Goldilocks zone for exoplanet's star
+        const hz = calculateHabitableZone(exoplanet.star.luminosity);
+
+        // Compare exoplanet's orbit with its habitable zone
+        let exoSuggestion = "";
+        if (exoplanet.distanceFromStar >= hz.inner && exoplanet.distanceFromStar <= hz.outer) {
+            exoSuggestion = `${exoplanet.name} is within the habitable zone of its star.`;
+        } else if (exoplanet.distanceFromStar < hz.inner) {
+            exoSuggestion = `${exoplanet.name} is too close to its star (likely too hot).`;
+        } else {
+            exoSuggestion = `${exoplanet.name} is too far from its star (likely too cold).`;
+        }
+
+        // Compare Solar System planets with Sun's habitable zone (luminosity = 1)
+        const solarHZ = calculateHabitableZone(1);
+        const solarSuggestions = solarPlanets.map(planet => {
+            if (planet.distance >= solarHZ.inner && planet.distance <= solarHZ.outer) {
+                return `${planet.name} is within the Sun's habitable zone.`;
+            } else if (planet.distance < solarHZ.inner) {
+                return `${planet.name} is too close to the Sun.`;
+            } else {
+                return `${planet.name} is too far from the Sun.`;
+            }
+        });
+
+        // Display results in the exoplanetFacts section
+        const factsDiv = document.getElementById('exoplanetFacts');
+        factsDiv.innerHTML = `
+            <h4>Goldilocks Zone Analysis</h4>
+            <p><strong>${exoplanet.name}</strong> orbits <strong>${exoplanet.star.name}</strong> at ${exoplanet.distanceFromStar} AU.</p>
+            <p>Habitable zone for ${exoplanet.star.name}: ${hz.inner.toFixed(2)} AU – ${hz.outer.toFixed(2)} AU</p>
+            <p>${exoSuggestion}</p>
+            <h4>Solar System Comparison</h4>
+            <p>Sun's habitable zone: ${solarHZ.inner.toFixed(2)} AU – ${solarHZ.outer.toFixed(2)} AU</p>
+            <ul>
+                ${solarSuggestions.map(s => `<li>${s}</li>`).join('')}
+            </ul>
+            <h4>Suggestion</h4>
+            <p>
+                ${exoSuggestion.includes('within') 
+                    ? 'This exoplanet may have conditions suitable for liquid water and potentially life, similar to Earth.' 
+                    : 'This exoplanet is unlikely to support Earth-like life due to its position relative to the habitable zone.'}
+            </p>
+        `;
+        
+
+
+    </script>
+</body>
+</html>
