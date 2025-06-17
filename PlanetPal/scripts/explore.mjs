@@ -27,8 +27,8 @@ async function fetchExoplanets() {
     }
     const data = await response.json();
     const dataCount = data.length;
-    console.log(`Fetched ${dataCount} exoplanets from ${EXO_URL}`);
-    console.log('Exoplanets fetched:', data);
+    //console.log(`Fetched ${dataCount} exoplanets from ${EXO_URL}`);
+    //console.log('Exoplanets fetched:', data);
      const seen = new Set();
     const uniquePlanets = data.filter(p => {
       if (seen.has(p.pl_name)) return false;
@@ -36,11 +36,11 @@ async function fetchExoplanets() {
       return true;
     });
     const dataCountDis = uniquePlanets.length;
-    console.log(`Fetched ${dataCountDis} exoplanets from ${EXO_URL}`);
-    console.log('Exoplanets fetched:', uniquePlanets);
-    
+    //console.log(`Fetched ${dataCountDis} exoplanets from ${EXO_URL}`);
+    //console.log('Exoplanets fetched:', uniquePlanets);
+
     //previewPlanets(uniquePlanets);
-    console.log(uniquePlanets);
+    //console.log(uniquePlanets);
     //return uniquePlanets;
     
 previewPlanets(uniquePlanets);
