@@ -6,7 +6,7 @@ const API_KEY = 'hB5ME60Ovw64Ey9FLdbxIC5dxlP79aZesIgvRQjN';
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=Cumulative&where=koi_disposition%20like%20%27CONFIRMED%27&format=json&limit=100&offset=0&api_key=" + API_KEY;
 //const EXO_URL = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync?query=select+pl_name,hostname,sy_snum,sy_snum,sy_pnum,sy_mnum,pl_refname,discoverymethod,disc_year,disc_telescope,pl_orbper,pl_orbsmax,pl_rade,pl_radj,pl_masse,pl_massj,pl_dens,pl_orbeccen,pl_eqt,st_refname,pl_orbincl,pl_rvamp,st_rad,st_mass,sy_dist,st_age,rowupdate+from+ps&format=json";
 //const EXO_URL = "../data/exoplanetsnasapstable.json";
-const EXO_URL = "../data/exo5.json";
+const EXO_URL = "data/exo5.json";
 const K_EXO_URL = "../data/exo3.json";
 
 

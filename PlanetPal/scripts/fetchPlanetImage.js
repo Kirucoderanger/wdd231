@@ -1,4 +1,4 @@
-const ImageUrl = "../data/exoplanetimgurl.json";
+const ImageUrl = "data/exoplanetimgurl.json";
 
 export async function fetchPlanetImage(planetName, urlIndex, Planet, randomUrlIndex) {
   try {
