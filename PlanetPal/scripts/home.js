@@ -5,7 +5,7 @@ document.getElementById('menuToggle').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('show');
 });
 
-console.log(parameter);
+//console.log(parameter);
 
  const data = [
     { title: "Planet A", description: "Planet A is a gas giant with several moons." },
