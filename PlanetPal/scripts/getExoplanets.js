@@ -105,7 +105,7 @@ function renderPlanetCard(planet) {
   card.className = 'planet-card';
   card.dataset.planet = planet.pl_name;
   card.innerHTML = `
-    <img class="planet-img" src="" alt="Planet Image" />
+    <img class="planet-img" src="" alt="Planet Image" loading="lazy"/>
     <h3>${planet.pl_name}/${planet.hostname}</h3>
     
   `;

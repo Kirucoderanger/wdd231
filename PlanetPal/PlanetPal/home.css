@@ -55,6 +55,7 @@ main {
     color: #fff;
     
     background:url('https://images-assets.nasa.gov/image/PIA22088/PIA22088~medium.jpg') no-repeat center center/cover ;
+    
     overflow: hidden;
     z-index: 1;
    
